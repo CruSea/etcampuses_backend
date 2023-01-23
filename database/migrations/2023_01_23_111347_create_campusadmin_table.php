@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->String('firstName');
             $table->String('lastName');
-            $table->String('email')->unique();
-            $table->String('password');
+            $table->String('email')->unique()->collation('latin1_general_cs');
+            $table->String('password')->collation('latin1_general_cs');
             $table->String('phone')->unique();
             $table->String('approvedBy')->nullable();
             $table->timestamps();

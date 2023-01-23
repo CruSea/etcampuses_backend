@@ -25,7 +25,16 @@ class CampusAdminController extends Controller
         ]);
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request){ // authentication -> login
+        
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Already Logged in!'
+            ]);
+        }
+
         $resultSet = DB::select('select * from campusadmin where email = ? and password = ?', [$request->email,$request->password]);
         if(empty($resultSet)){        
             return response()->json([
@@ -34,10 +43,38 @@ class CampusAdminController extends Controller
             ]);
         }
         else{
+            //save session        
+            $request->session()->put('userEmail', $request->email);
+
             return response()->json([
                 'status' => 200,
                 'message' => 'Authentication successful!' 
             ]);
         }
+    }
+
+    public function logOut(Request $request){
+
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+            
+            $email = $request->session()->pull('userEmail', 'null');
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Log out successful!'
+                //'user logged out' => $email,
+            ]);
+
+        }
+        else{
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Not Logged in!'
+            ]);
+
+        }
+
     }
 }

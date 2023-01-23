@@ -15,8 +15,13 @@ use App\Http\Controllers\API\CampusAdminController;
 |
 */
 
-Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']);
-Route::get('/login', [CampusAdminController::Class, 'authenticate']);
+Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']); // implicit, temporary
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/login', [CampusAdminController::Class, 'authenticate']);
+    Route::get('/logout', [CampusAdminController::Class, 'logOut']);
+});
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
