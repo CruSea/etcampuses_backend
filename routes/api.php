@@ -20,6 +20,7 @@ Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']); // im
 Route::group(['middleware' => ['web']], function () {
     Route::get('/login', [CampusAdminController::Class, 'authenticate']);
     Route::get('/logout', [CampusAdminController::Class, 'logOut']);
+    Route::get('/changepassword',[CampusAdminController::Class, 'changePassword']);
 });
 
 

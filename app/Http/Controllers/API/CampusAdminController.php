@@ -77,4 +77,43 @@ class CampusAdminController extends Controller
         }
 
     }
+
+    public function changePassword(Request $request){
+
+        //authenticate
+        if ($request->session()->exists('userEmail')) {
+            $currentPassword = DB::scalar('select password from campusadmin where email = ?', [$request->session()->get('userEmail')]);
+            if($request->oldPassword == $currentPassword){
+                if($request->newPassword == $request->confirmPassword){
+                    $affected = DB::update('update campusadmin set password = ? where email = ?', [$request->newPassword, $request->session()->get('userEmail')]);
+                    if($affected == 1){
+                        return response()->json([
+                            'status' => 200,
+                            'message' => 'Password is changed successfully!'
+                        ]);
+                    }
+                    else{
+                        return response()->json([
+                            'status' => 500,
+                            'message' => 'Unable to change password!'
+                        ]);
+                    }
+                }
+            }
+            else{
+                return response()->json([
+                    'status' => 403,
+                    'message' => 'Old Password incorrect!'
+                ]);
+            }
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!'
+            ]);
+        }
+    }
+
 }
