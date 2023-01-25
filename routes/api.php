@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CampusAdminController;
+use App\Http\Controllers\API\PasswordResetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,8 @@ use App\Http\Controllers\API\CampusAdminController;
 */
 
 Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']); // implicit, temporary
+
+Route::post('/reset-password', [PasswordResetController::Class, 'store']);
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/login', [CampusAdminController::Class, 'authenticate']);

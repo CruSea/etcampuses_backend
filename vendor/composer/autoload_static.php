@@ -500,6 +500,7 @@ class ComposerStaticInitb99489809d5d064da87d398d00613778
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Events\\PasswordChangeRequested' => __DIR__ . '/../..' . '/app/Events/PasswordChangeRequested.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\API\\CampusAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/CampusAdminController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
@@ -514,7 +515,9 @@ class ComposerStaticInitb99489809d5d064da87d398d00613778
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\CampusAdmin' => __DIR__ . '/../..' . '/app/Models/CampusAdmin.php',
+        'App\\Models\\PasswordReset' => __DIR__ . '/../..' . '/app/Models/PasswordReset.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Notifications\\PasswordReset' => __DIR__ . '/../..' . '/app/Notifications/PasswordReset.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

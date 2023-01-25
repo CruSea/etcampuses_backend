@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CampusAdmin extends Model
 {
     use HasFactory;
+
     protected $table = 'campusadmin';
     protected $fillable = [
         'campusAdminID',
