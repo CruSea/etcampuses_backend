@@ -13,7 +13,7 @@ class PasswordResetModel extends Model
 
     protected $table = 'password_resets';
     protected $fillable = [
-        'key',
+        'resetKey',
         'email'
     ];
 

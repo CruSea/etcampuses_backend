@@ -48,7 +48,7 @@ class PasswordReset extends Notification{
                     ->greeting('Hello, ' . $firstName)
                     ->line('You are receiving this email because we received a password reset request for your account.')
                     ->line('Click the button below to reset your password:')
-                    ->action('Reset Password', url('https://localhost:8000/reset-password'))
+                    ->action('Reset Password', url('https://localhost:8000/reset-password')) //React URL plus uuid
                     ->line('If you did not request a password reset, no further action is required.');
                 
                     
