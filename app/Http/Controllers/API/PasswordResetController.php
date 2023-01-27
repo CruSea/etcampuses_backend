@@ -40,6 +40,15 @@ class PasswordResetController extends Controller
     {
         //method called when user requests password reset
 
+        //check if email exists in campusadmin table
+        $resultSet = DB::scalar('select email from campusadmin where email = ?', [$request->input('email')]);
+        if(empty($resultSet)){
+            return response()->json([
+                'status' => 404,
+                'message' => 'Email does not exist!',
+            ]);
+        }
+
         $passwordReset = new PasswordResetModel();
         $passwordReset->resetKey = (string) Str::uuid();
         $passwordReset->email = $request->input('email');
