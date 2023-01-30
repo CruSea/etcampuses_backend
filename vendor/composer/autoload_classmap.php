@@ -24,6 +24,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Listeners\\SendEmailResetNotification' => $baseDir . '/app/Listeners/SendEmailResetNotification.php',
     'App\\Models\\CampusAdmin' => $baseDir . '/app/Models/CampusAdmin.php',
+    'App\\Models\\Gallery' => $baseDir . '/app/Models/Gallery.php',
     'App\\Models\\PasswordResetModel' => $baseDir . '/app/Models/PasswordResetModel.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Notifications\\PasswordReset' => $baseDir . '/app/Notifications/PasswordReset.php',

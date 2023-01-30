@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CampusAdminController;
 use App\Http\Controllers\API\PasswordResetController;
+use APP\Http\Controllers\API\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/login', [CampusAdminController::Class, 'authenticate']);
     Route::get('/logout', [CampusAdminController::Class, 'logOut']);
     Route::get('/changepassword',[CampusAdminController::Class, 'changePassword']);
+
+    Route::post('/upload-gallery-image', [GalleryController::Class, 'store']);
 });
 
 

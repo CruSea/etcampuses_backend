@@ -517,6 +517,7 @@ class ComposerStaticInitb99489809d5d064da87d398d00613778
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Listeners\\SendEmailResetNotification' => __DIR__ . '/../..' . '/app/Listeners/SendEmailResetNotification.php',
         'App\\Models\\CampusAdmin' => __DIR__ . '/../..' . '/app/Models/CampusAdmin.php',
+        'App\\Models\\Gallery' => __DIR__ . '/../..' . '/app/Models/Gallery.php',
         'App\\Models\\PasswordResetModel' => __DIR__ . '/../..' . '/app/Models/PasswordResetModel.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Notifications\\PasswordReset' => __DIR__ . '/../..' . '/app/Notifications/PasswordReset.php',
