@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('gallery', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('campusID');
-            $table->string('imageURL');
+            $table->unsignedBigInteger('campusID');
+            $table->foreign('campusID')->references('id')->on('campuses');
+            $table->string('title');
+            $table->string('description');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gallery');
+        Schema::dropIfExists('cities');
     }
 };

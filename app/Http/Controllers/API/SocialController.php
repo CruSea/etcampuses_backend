@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Gallery;
+use App\Models\Social;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class GalleryController extends Controller
+class SocialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,10 +42,10 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Social  $social
      * @return \Illuminate\Http\Response
      */
-    public function show(Gallery $gallery)
+    public function show(Social $social)
     {
         //
     }
@@ -53,10 +53,10 @@ class GalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Social  $social
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gallery $gallery)
+    public function edit(Social $social)
     {
         //
     }
@@ -65,10 +65,10 @@ class GalleryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Social  $social
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gallery $gallery)
+    public function update(Request $request, Social $social)
     {
         //
     }
@@ -76,10 +76,10 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Social  $social
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Gallery $gallery)
+    public function destroy(Social $social)
     {
         //
     }

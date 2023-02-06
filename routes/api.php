@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CampusAdminController;
 use App\Http\Controllers\API\PasswordResetController;
-use APP\Http\Controllers\API\GalleryController;
+use App\Http\Controllers\API\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
