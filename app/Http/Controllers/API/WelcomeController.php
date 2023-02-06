@@ -23,9 +23,16 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $id)
     {
-        //
+        $welcome = new Welcome();
+        $welcome->campusID = $id;
+        $welcome->image = '';
+        $welcome->title = '';
+        $welcome->campusName = '';
+        $welcome->moto = '';
+        $welcome->registerButtonText = '';
+        $welcome->save();
     }
 
     /**

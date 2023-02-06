@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Campus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\WelcomeController;
 
 class CampusController extends Controller
 {
@@ -23,9 +24,39 @@ class CampusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if ($request->session()->exists('userEmail')) {
+
+            //Make sure this user is admin///////////////////////////////
+
+            $campus = new Campus();
+            $campus->services_Title = '';
+            $campus->teams_Title = '';
+            $campus->teams_Description = '';
+            $campus->leaders_Title = '';
+            $campus->leaders_BgColor = '';
+            $campus->gallery_Title = '';
+            $campus->save();
+
+            //create welcome instance
+            $welcome = new WelcomeController();
+            $welcome->create($campus->id);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Campus Created Successfully!' 
+            ]);
+
+
+        }
+        else {
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not logged in!' 
+            ]);
+        }
+
     }
 
     /**
