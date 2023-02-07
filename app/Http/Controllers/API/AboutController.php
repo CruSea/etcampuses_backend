@@ -23,10 +23,17 @@ class AboutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $id)
     {
-        
+        $about = new About();
+        $about->campusID = $id;
+        $about->title = 'About Campus';
+        $about->description = 'Say something about your campus';
+        $about->logo = '';
+        $about->bgImage = '';
+        $about->save();
     }
+
 
     /**
      * Store a newly created resource in storage.

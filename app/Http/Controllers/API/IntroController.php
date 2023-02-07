@@ -23,9 +23,16 @@ class IntroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $id)
     {
-        //
+        $intro = new Intro();
+        $intro->campusID = $id;
+        $intro->title = 'Welcome Message';
+        $intro->message = 'Put your welcome message here';
+        $intro->author = 'Author Name';
+        $intro->authorPosition = 'Author Position';
+        $intro->image = '';
+        $intro->save();
     }
 
     /**

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('social', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('campusID');
-            $table->foreign('campusid')->references('id')->on('campuses');
+            $table->foreign('campusid')->references('id')->on('campuses')->onUpdate('cascade')->onDelete('cascade');
             $table->string('facebookLink');
             $table->string('telegramLink');
             $table->string('instagramLink');

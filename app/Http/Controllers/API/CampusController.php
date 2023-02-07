@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Models\Campus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\API\WelcomeController;
 
 class CampusController extends Controller
 {
@@ -31,17 +30,45 @@ class CampusController extends Controller
             //Make sure this user is admin///////////////////////////////
 
             $campus = new Campus();
-            $campus->services_Title = '';
-            $campus->teams_Title = '';
-            $campus->teams_Description = '';
-            $campus->leaders_Title = '';
-            $campus->leaders_BgColor = '';
-            $campus->gallery_Title = '';
+            $campus->services_Title = 'Regular Programs';
+            $campus->teams_Title = 'Teams waiting you';
+            $campus->teams_Description = '<General description about your teams>';
+            $campus->leaders_Title = 'Our Leaders';
+            $campus->leaders_BgColor = 'rgba(3, 163, 245, 0.09)';
+            $campus->gallery_Title = 'Gallery';
             $campus->save();
 
             //create welcome instance
             $welcome = new WelcomeController();
             $welcome->create($campus->id);
+
+            //create intro instance
+            $intro = new IntroController();
+            $intro->create($campus->id);
+
+            //create city instance
+            $city = new CityController();
+            $city->create($campus->id);
+
+            //create about instance
+            $about = new AboutController();
+            $about->create($campus->id);
+
+            //create fellowship instance
+            $fellowship = new FellowshipController();
+            $fellowship->create($campus->id);
+
+            //create registration instance
+            $registration = new RegistrationController();
+            $registration->create($campus->id);
+
+            //create footer instance
+            $footer = new FooterController();
+            $footer->create($campus->id);
+
+            //create social instance
+            $social = new SocialController();
+            $social->create($campus->id);
 
             return response()->json([
                 'status' => 200,

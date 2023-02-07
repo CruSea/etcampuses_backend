@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('footers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('campusID');
-            $table->foreign('campusID')->references('id')->on('campuses');
+            $table->foreign('campusID')->references('id')->on('campuses')->onUpdate('cascade')->onDelete('cascade');
             $table->string('socialMediasCaption');
             $table->string('bgColor');
             $table->string('contactUsCaption');

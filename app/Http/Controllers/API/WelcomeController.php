@@ -28,10 +28,10 @@ class WelcomeController extends Controller
         $welcome = new Welcome();
         $welcome->campusID = $id;
         $welcome->image = '';
-        $welcome->title = '';
-        $welcome->campusName = '';
-        $welcome->moto = '';
-        $welcome->registerButtonText = '';
+        $welcome->title = 'Welcome to <Your City>';
+        $welcome->campusName = '<Your Campus Name>';
+        $welcome->moto = 'Put your campus moto here';
+        $welcome->registerButtonText = 'Register Now';
         $welcome->save();
     }
 

@@ -23,9 +23,16 @@ class SocialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $id)
     {
-        //
+        $social = new Social();
+        $social->campusID = $id;
+        $social->facebookLink = '<Your Facebook Link>';
+        $social->telegramLink = '<Your Telegram Link>';
+        $social->instagramLink = '<Your Instagram Link>';
+        $social->youtubeLink = '<Your Youtube Link>';
+        $social->tiktokLink = '<Your Tiktok Link>';
+        $social->save();
     }
 
     /**

@@ -23,9 +23,14 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $id)
     {
-        //
+        $city = new City();
+        $city->campusID = $id;
+        $city->title = 'Our City';
+        $city->description = 'Say something about your city';
+        $city->name = 'Your City Name';
+        $city->save();
     }
 
     /**
