@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -36,7 +37,18 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $gallery = new Gallery();
+        $gallery->campusID = $request->campusID;
+                
+        $path = $request->image->storePublicly('gallery','public');
+        $gallery->imageURL = $path;
+
+        $gallery->save();
+
+        return response()->json([
+            'message' => 'Image uploaded successfully',
+            //'url' => Storage::url($path)
+        ], 200);
     }
 
     /**

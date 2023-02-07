@@ -38,8 +38,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/public'), //do not include the particular folder name here, use it in CRUDs
+            'url' => env('APP_URL').':'.env('APP_PORT').'/',
             'visibility' => 'public',
             'throw' => false,
             'permissions' => [
@@ -80,7 +80,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('gallery') => storage_path('app/public/gallery'),
     ],
 
 ];
