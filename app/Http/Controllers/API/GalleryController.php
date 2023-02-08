@@ -47,7 +47,6 @@ class GalleryController extends Controller
 
         return response()->json([
             'message' => 'Image uploaded successfully',
-            //'url' => Storage::url($path)
         ], 200);
     }
 
