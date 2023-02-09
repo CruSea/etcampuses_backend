@@ -37,17 +37,37 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        $gallery = new Gallery();
-        $gallery->campusID = $request->campusID;
-                
-        $path = $request->image->storePublicly('gallery','public');
-        $gallery->imageURL = $path;
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
 
-        $gallery->save();
+            //image validation
+            $validated = $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
 
-        return response()->json([
-            'message' => 'Image uploaded successfully',
-        ], 200);
+            //campus admin validation
+
+            $gallery = new Gallery();
+            $gallery->campusID = $request->campusID;
+                    
+            $path = $request->image->storePublicly('gallery','public');
+            $gallery->imageURL = $path;
+
+            $gallery->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Image uploaded successfully',
+            ],);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
+        
     }
 
     /**
@@ -90,8 +110,33 @@ class GalleryController extends Controller
      * @param  \App\Models\Gallery  $gallery
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Gallery $gallery)
+    public function destroy(Request $request)
     {
-        //
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+
+            $gallery = Gallery::where('imageURL',$request->imageURL)->first();
+            if($gallery == null)
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Image not found!',
+                ],);
+
+            $gallery->delete();
+
+            Storage::disk('public')->delete($request->imageURL);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Image deleted successfully',
+            ],);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 }

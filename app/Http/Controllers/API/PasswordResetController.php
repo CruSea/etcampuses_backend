@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\PasswordReset2;
+use App\Models\CampusAdmin;
+use Illuminate\Support\Facades\Cache;
+
 
 class PasswordResetController extends Controller
 {
@@ -49,10 +53,27 @@ class PasswordResetController extends Controller
             ]);
         }
 
+        /* Previous password reset method
         $passwordReset = new PasswordResetModel();
         $passwordReset->resetKey = (string) Str::uuid();
         $passwordReset->email = $request->input('email');
         $passwordReset->save();
+        */
+
+        //check if password reset was requested earlier
+        
+
+        $resetKey = (string) Str::uuid();
+
+        //save to cache
+        Cache::put($resetKey, $request->input('email'), $seconds = 900); //900 seconds = 15 minutes
+
+        //send email
+        //get model first
+        $campusAdmin = CampusAdmin::where('email', $request->input('email'))->first();
+
+        $campusAdmin->notify(new PasswordReset2($campusAdmin, $resetKey));
+
 
         return response()->json([
             'status' => 200,
@@ -96,21 +117,18 @@ class PasswordResetController extends Controller
         $newPassword = $request->input('newPassword');
         $confirmPassword = $request->input('confirmPassword');
 
-        $resultSet = DB::scalar('select email from password_resets where resetKey = ?', [$request->resetKey]);          
-    
-        if(empty($resultSet)){        
-            return response()->json([
-                'status' => 404,
-                'message' => 'URL expired or does not exist!',
-            ]);
-        }
-        else{
-            
-            if($newPassword == $confirmPassword){
-                DB::update('update campusadmin set password = ? where email = ?', [$newPassword, $resultSet]);
+        //old method
+        //$resultSet = DB::scalar('select email from password_resets where resetKey = ?', [$request->resetKey]);      
+        
+        //new method
+        
 
-                //clean up the password reset table        
-                DB::table('password_resets')->where('email', '=', $resultSet)->delete();
+        if (Cache::has($request->resetKey)) {
+            //retierieve and delete data from cache
+            $email = Cache::pull($request->resetKey);
+
+            if($newPassword == $confirmPassword){
+                DB::update('update campusadmin set password = ? where email = ?', [$newPassword, $email]);            
 
                 return response()->json([
                     'status' => 200,
@@ -125,6 +143,42 @@ class PasswordResetController extends Controller
             }
 
         }
+        else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'URL expired or does not exist!',
+            ]);
+        }
+    
+        //Old approach
+
+        // if(empty($resultSet)){        
+        //     return response()->json([
+        //         'status' => 404,
+        //         'message' => 'URL expired or does not exist!',
+        //     ]);
+        // }
+        // else{
+            
+        //     if($newPassword == $confirmPassword){
+        //         DB::update('update campusadmin set password = ? where email = ?', [$newPassword, $resultSet]);
+
+        //         //clean up the password reset table        
+        //         DB::table('password_resets')->where('email', '=', $resultSet)->delete();
+
+        //         return response()->json([
+        //             'status' => 200,
+        //             'message' => 'Password is successfully reset!' 
+        //         ]);
+        //     }
+        //     else{
+        //         return response()->json([
+        //             'status' => 422,
+        //             'message' => 'Passwords do not match!' 
+        //         ]);
+        //     }
+
+        // }
 
     }
 

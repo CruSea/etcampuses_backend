@@ -29,6 +29,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/changepassword',[CampusAdminController::Class, 'changePassword']);
 
     Route::post('/upload-gallery-image', [GalleryController::Class, 'store']);
+    Route::delete('/delete-gallery-image', [GalleryController::Class, 'destroy']);
+
     Route::post('/create-campus', [CampusController::Class, 'create']);
 });
 
