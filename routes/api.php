@@ -18,7 +18,7 @@ use App\Http\Controllers\API\CampusController;
 |
 */
 
-Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']); // implicit, temporary
+//Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']); // implicit, temporary
 
 Route::post('/reset-password-request', [PasswordResetController::Class, 'store']); // to request password reset
 Route::post('/reset-password', [PasswordResetController::Class, 'update']); // to reset password after link is clicked

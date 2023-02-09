@@ -12,12 +12,12 @@ class CampusAdmin extends Model
 
     protected $table = 'campusadmin';
     protected $fillable = [
-        'campusAdminID',
         'firstName',
         'lastName',
         'email',
         'password',
         'phone',
+        'campusID',
         'approvedBy'
     ];
 }

@@ -20,7 +20,9 @@ return new class extends Migration
             $table->String('email')->unique()->collation('latin1_general_cs');
             $table->String('password')->collation('latin1_general_cs');
             $table->String('phone')->unique();
-            $table->String('approvedBy')->nullable();
+            $table->unsignedBigInteger('campusID');
+            $table->foreign('campusID')->references('id')->on('campuses')->onUpdate('cascade')->onDelete('cascade');
+            $table->String('approvedBy')->nullable(); //temporarily nullable
             $table->timestamps();
         });
     }

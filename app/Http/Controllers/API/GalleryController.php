@@ -6,6 +6,7 @@ use App\Models\Gallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Models\CampusAdmin;
 
 class GalleryController extends Controller
 {
@@ -48,7 +49,11 @@ class GalleryController extends Controller
             //campus admin validation
 
             $gallery = new Gallery();
-            $gallery->campusID = $request->campusID;
+
+            //retrieve campusID from campusAdmin table
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+
+            $gallery->campusID = $campusAdmin->campusID;
                     
             $path = $request->image->storePublicly('gallery','public');
             $gallery->imageURL = $path;
@@ -116,11 +121,22 @@ class GalleryController extends Controller
         if ($request->session()->exists('userEmail')) {
 
             $gallery = Gallery::where('imageURL',$request->imageURL)->first();
-            if($gallery == null)
+            if($gallery == null){
                 return response()->json([
                     'status' => 404,
                     'message' => 'Image not found!',
                 ],);
+            }
+
+            //make sure the image belongs to the campus admin
+            $campusAdmin = CampusAdmin::where('email',$request->session()->get('userEmail'))->first();
+
+            if($gallery->campusID != $campusAdmin->campusID){
+                return response()->json([
+                    'status' => 403,
+                    'message' => 'Not authorized!',
+                ],);
+            }
 
             $gallery->delete();
 

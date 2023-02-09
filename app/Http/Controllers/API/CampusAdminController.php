@@ -9,14 +9,16 @@ use Illuminate\Support\Facades\DB;
 
 class CampusAdminController extends Controller
 {
-    public function store(Request $request){
+    public function create(String $firstName, String $lastName, String $email, String $password, String $phone, String $campusID, String $approvedBy){ 
+        // create campus admin
         $campusAdmin = new CampusAdmin();
-        $campusAdmin->firstName = $request->input('firstName');
-        $campusAdmin->lastName = $request->input('lastName');
-        $campusAdmin->email = $request->input('email');
-        $campusAdmin->password = $request->input('password');
-        $campusAdmin->phone = $request->input('phone');
-        $campusAdmin->approvedBy = $request->input('approvedBy');
+        $campusAdmin->firstName = $firstName;
+        $campusAdmin->lastName = $lastName;
+        $campusAdmin->email = $email;
+        $campusAdmin->password = $password;
+        $campusAdmin->phone = $phone;
+        $campusAdmin->campusID = $campusID;
+        $campusAdmin->approvedBy = $approvedBy;
         $campusAdmin->save();
 
         return response()->json([

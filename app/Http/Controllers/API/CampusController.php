@@ -27,7 +27,7 @@ class CampusController extends Controller
     {
         if ($request->session()->exists('userEmail')) {
 
-            //Make sure this user is admin///////////////////////////////
+            //Make sure this user is super-admin /////////////////////////////////////////////////
 
             $campus = new Campus();
             $campus->services_Title = 'Regular Programs';
@@ -70,9 +70,28 @@ class CampusController extends Controller
             $social = new SocialController();
             $social->create($campus->id);
 
+
+            //Generate a unique password
+            $password = uniqid();
+
+            //create leader for the campus
+            $campusAdmin = new CampusAdminController();
+            $campusAdmin->create(
+                $request->firstName,
+                $request->lastName,
+                $request->email,
+                $password,
+                $request->phone,            
+                $campus->id,
+                'NULL'
+            );
+
+
             return response()->json([
                 'status' => 200,
-                'message' => 'Campus Created Successfully!' 
+                'message' => 'Campus Created Successfully!',
+                'New Campus Leader email' => $request->email,
+                'New Campus Leader password' => $password
             ]);
 
 
