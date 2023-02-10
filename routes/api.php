@@ -6,6 +6,8 @@ use App\Http\Controllers\API\CampusAdminController;
 use App\Http\Controllers\API\PasswordResetController;
 use App\Http\Controllers\API\GalleryController;
 use App\Http\Controllers\API\CampusController;
+use App\Http\Controllers\API\WelcomeController;
+use App\Http\Controllers\API\IntroController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::delete('/delete-gallery-image', [GalleryController::Class, 'destroy']);
 
     Route::post('/create-campus', [CampusController::Class, 'create']);
+
+    Route::post('/update-welcome', [WelcomeController::Class, 'update']);
+    Route::post('/update-intro', [IntroController::Class, 'update']);
 });
 
 

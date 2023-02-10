@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Intro;
+use App\Models\CampusAdmin;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -75,9 +77,52 @@ class IntroController extends Controller
      * @param  \App\Models\Intro  $intro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Intro $intro)
+    public function update(Request $request)
     {
-        //
+        
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the intro that belongs to the campus admin
+            $intro = Intro::where('campusID', $campusAdmin->campusID)->first();
+
+            //check if file is uploaded
+            if ($request->hasFile('image')) {
+                //image validation
+                $validated = $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+                ]);
+
+                //delete the old image
+                Storage::delete($intro->image);
+
+                $path = $request->image->storePublicly('intro','public');
+                $intro->image = $path;
+            }
+
+            $intro->title = $request->title;
+            $intro->message = $request->message;
+            $intro->author = $request->author;
+            $intro->authorPosition = $request->authorPosition;
+
+            $intro->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Update successful!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
+
     }
 
     /**
