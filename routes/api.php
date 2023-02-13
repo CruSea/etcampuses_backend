@@ -8,6 +8,12 @@ use App\Http\Controllers\API\GalleryController;
 use App\Http\Controllers\API\CampusController;
 use App\Http\Controllers\API\WelcomeController;
 use App\Http\Controllers\API\IntroController;
+use App\Http\Controllers\API\CityController;
+use App\Http\Controllers\API\AboutController;
+use App\Http\Controllers\API\FellowshipController;
+use App\Http\Controllers\API\RegistrationController;
+use App\Http\Controllers\API\FooterController;
+use App\Http\Controllers\API\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +34,7 @@ Route::post('/reset-password', [PasswordResetController::Class, 'update']); // t
 Route::group(['middleware' => ['web']], function () {
     Route::get('/login', [CampusAdminController::Class, 'authenticate']);
     Route::get('/logout', [CampusAdminController::Class, 'logOut']);
-    Route::get('/changepassword',[CampusAdminController::Class, 'changePassword']);
+    Route::post('/changepassword',[CampusAdminController::Class, 'changePassword']);
 
     Route::post('/upload-gallery-image', [GalleryController::Class, 'store']);
     Route::delete('/delete-gallery-image', [GalleryController::Class, 'destroy']);
@@ -37,6 +43,12 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::post('/update-welcome', [WelcomeController::Class, 'update']);
     Route::post('/update-intro', [IntroController::Class, 'update']);
+    Route::post('/update-city', [CityController::Class, 'update']);
+    Route::post('/update-about', [AboutController::Class, 'update']);
+    Route::post('/update-fellowship', [FellowshipController::Class, 'update']);
+    Route::post('/update-registration', [RegistrationController::Class, 'update']);
+    Route::post('/update-footer', [FooterController::Class, 'update']);
+    Route::post('/update-social', [SocialController::Class, 'update']);
 });
 
 

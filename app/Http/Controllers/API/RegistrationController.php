@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Registration;
+use App\Models\CampusAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -85,9 +86,51 @@ class RegistrationController extends Controller
      * @param  \App\Models\Registration  $registration
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Registration $registration)
+    public function update(Request $request)
     {
-        //
+
+        // ONLY TITLE, DECRIPTION, BGCOLOR AND BUTTTON NAME ARE UPDATED FOR NOW
+
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the registration that belongs to the campus admin
+            $registration = Registration::where('campusID', $campusAdmin->campusID)->first();
+            
+            // some of the fields are not updated for now
+            $registration->title = $request->title;
+            $registration->description = $request->description;
+            //$registration->firstNameCaption = $request->firstNameCaption;
+            //$registration->lastNameCaption = $request->lastNameCaption;
+            //$registration->cityCaption = $request->cityCaption;
+            //$registration->languageCaption = $request->languageCaption;
+            //$registration->sexCaption = $request->sexCaption;
+            //$registration->maleCaption = $request->maleCaption;
+            //$registration->femaleCaption = $request->femaleCaption;
+            //$registration->phoneNumberCaption = $request->phoneNumberCaption;
+            //$registration->isHostAvailableCaption = $request->isHostAvailableCaption;
+            //$registration->yesCaption = $request->yesCaption;
+            //$registration->noCaption =  $request->noCaption;
+            $registration->buttonName = $request->buttonName;
+            $registration->bgColor = $request->bgColor;
+
+            $registration->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Update successful!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 
     /**

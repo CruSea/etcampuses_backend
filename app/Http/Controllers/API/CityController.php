@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\CampusAdmin;
 
 class CityController extends Controller
 {
@@ -73,9 +74,35 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request)
     {
-        //
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the City that belongs to the campus admin
+            $city = City::where('campusID', $campusAdmin->campusID)->first();
+
+            $city->title = $request->title;
+            $city->description = $request->description;
+            $city->name = $request->name;
+
+            $city->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Update successful!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 
     /**

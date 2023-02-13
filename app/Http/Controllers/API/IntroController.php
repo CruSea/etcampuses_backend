@@ -96,8 +96,10 @@ class IntroController extends Controller
                     'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
                 ]);
 
-                //delete the old image
-                Storage::delete($intro->image);
+                //delete the old image if it exists
+                if ($intro->image != '') {
+                    Storage::delete($intro->image);
+                }
 
                 $path = $request->image->storePublicly('intro','public');
                 $intro->image = $path;

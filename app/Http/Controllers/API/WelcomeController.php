@@ -96,8 +96,10 @@ class WelcomeController extends Controller
                     'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
                 ]);
 
-                //delete the old image
-                Storage::delete($welcome->image);
+                //delete the old image if it exists
+                if($welcome->image != ''){
+                    Storage::delete($welcome->image);
+                }                
 
                 $path = $request->image->storePublicly('welcome','public');
                 $welcome->image = $path;

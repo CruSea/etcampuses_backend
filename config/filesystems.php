@@ -83,6 +83,9 @@ return [
         public_path('gallery') => storage_path('app/public/gallery'),
         public_path('welcome') => storage_path('app/public/welcome'),
         public_path('intro') => storage_path('app/public/intro'),
+        public_path('about_logo') => storage_path('app/public/about_logo'),
+        public_path('about_bgImage') => storage_path('app/public/about_bgImage'),
+        public_path('fellowship') => storage_path('app/public/fellowship'),
     ],
 
 ];
