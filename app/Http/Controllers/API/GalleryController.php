@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Gallery;
+use App\Models\CampusAdmin;
+use App\Models\Campus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use App\Models\CampusAdmin;
 
 class GalleryController extends Controller
 {
@@ -106,7 +107,35 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
-        //
+
+        //UPDATES THE GALLERY TITLE FROM CAMPUS TABLE
+        // It is part of updating gallery
+
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the campus that belongs to the campus admin
+            $campus = Campus::where('id', $campusAdmin->campusID)->first();
+
+            $campus->gallery_Title = $request->gallery_Title;            
+
+            $campus->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Update successful!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 
     /**

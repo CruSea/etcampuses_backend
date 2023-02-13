@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Service;
+use App\Models\CampusAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -36,7 +37,35 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+
+            $service = new Service();
+
+            //retrieve campusID from campusAdmin table
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+
+            $service->campusID = $campusAdmin->campusID;
+
+            $service->name = $request->name;
+            $service->day = $request->day;
+            $service->time = $request->time;
+            $service->address = $request->address;
+                                
+            $service->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Service created successfully',
+            ],);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 
     /**
@@ -45,9 +74,30 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function show(Service $service, Request $request)
     {
-        //
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {            
+
+            //retrieve campusID from campusAdmin table
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+
+            //get all services for the campus
+            $services = Service::where('campusID', $campusAdmin->campusID)->get();
+
+            
+            return response()->json([
+                'status' => 200,
+                'services' => $services,
+            ],);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 
     /**
@@ -68,9 +118,45 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request)
     {
-        //
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {            
+
+            //retrieve campusID from campusAdmin table
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+
+            //get the service that needs to be updated
+            $service = Service::where('id', $request->serviceID)->first();
+
+            //check if the result is empty
+            if($service == null){
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Service not found',
+                ]);
+            }
+
+            //update the service
+            $service->name = $request->name;
+            $service->day = $request->day;
+            $service->time = $request->time;
+            $service->address = $request->address;
+
+            $service->save();
+            
+            return response()->json([
+                'status' => 200,
+                'message' => 'Service updated successfully',
+            ],);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 
     /**
@@ -79,8 +165,39 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
+    public function destroy(Request $request)
     {
-        //
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {            
+
+            //retrieve campusID from campusAdmin table
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+
+            //get the service that needs to be deleted
+            $service = Service::where('id', $request->serviceID)->first();
+
+            //check if the result is empty
+            if($service == null){
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Service not found',
+                ]);
+            }
+
+            //delete the service
+            $service->delete();
+            
+            return response()->json([
+                'status' => 200,
+                'message' => 'Service deleted successfully',
+            ],);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\API\FellowshipController;
 use App\Http\Controllers\API\RegistrationController;
 use App\Http\Controllers\API\FooterController;
 use App\Http\Controllers\API\SocialController;
+use App\Http\Controllers\API\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/update-registration', [RegistrationController::Class, 'update']);
     Route::post('/update-footer', [FooterController::Class, 'update']);
     Route::post('/update-social', [SocialController::Class, 'update']);
+    Route::post('/update-gallery-title', [GalleryController::Class, 'update']); //May be implicit or part of other routes
+
+    Route::post('/create-service', [ServiceController::Class, 'store']);
+    Route::get('/get-services', [ServiceController::Class, 'show']);
+    Route::post('/update-service', [ServiceController::Class, 'update']);
+    Route::delete('/delete-service', [ServiceController::Class, 'destroy']);
+
 });
 
 
