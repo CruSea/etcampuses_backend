@@ -17,6 +17,7 @@ use App\Http\Controllers\API\SocialController;
 use App\Http\Controllers\API\ServiceController;
 use App\Http\Controllers\API\LeaderController;
 use App\Http\Controllers\API\TeamController;
+use App\Http\Controllers\API\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-teams', [TeamController::Class, 'show']);
     Route::post('/update-team', [TeamController::Class, 'update']);
     Route::delete('/delete-team', [TeamController::Class, 'destroy']);
+    
+    Route::post('/create-student', [StudentController::Class, 'store']); //Creating students shouldn't be authenticated
+    Route::get('/get-students', [StudentController::Class, 'show']);
+    Route::post('/update-student', [StudentController::Class, 'update']);
+    Route::delete('/delete-student', [StudentController::Class, 'destroy']);
 
 });
 
