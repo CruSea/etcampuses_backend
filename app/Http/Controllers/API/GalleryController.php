@@ -105,37 +105,9 @@ class GalleryController extends Controller
      * @param  \App\Models\Gallery  $gallery
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gallery $gallery)
-    {
-
-        //UPDATES THE GALLERY TITLE FROM CAMPUS TABLE
-        // It is part of updating gallery
-
-        //check if session exsists
-        if ($request->session()->exists('userEmail')) {
-        
-            //first, get the campus admin
-            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
-            
-            //fetch the campus that belongs to the campus admin
-            $campus = Campus::where('id', $campusAdmin->campusID)->first();
-
-            $campus->gallery_Title = $request->gallery_Title;            
-
-            $campus->save();
-
-            return response()->json([
-                'status' => 200,
-                'message' => 'Update successful!',
-            ]);
-
-        }
-        else{
-            return response()->json([
-                'status' => 403,
-                'message' => 'Not Logged in!',
-            ]);
-        }
+    public function update(Request $request)
+    {        
+        //
     }
 
     /**

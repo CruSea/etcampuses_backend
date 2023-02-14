@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Campus;
+use App\Models\CampusAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -114,6 +115,174 @@ class CampusController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function update_Gallery_Title(Request $request){
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the campus that belongs to the campus admin
+            $campus = Campus::where('id', $campusAdmin->campusID)->first();
+
+            $campus->gallery_Title = $request->gallery_Title;            
+
+            $campus->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Gallery title updated successfully!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
+    }
+
+    public function update_Services_Title(Request $request){
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the campus that belongs to the campus admin
+            $campus = Campus::where('id', $campusAdmin->campusID)->first();
+
+            $campus->services_Title = $request->services_Title;            
+
+            $campus->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Services title updated successfully!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
+    }
+
+    public function update_Teams_Title(Request $request){
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the campus that belongs to the campus admin
+            $campus = Campus::where('id', $campusAdmin->campusID)->first();
+
+            $campus->teams_Title = $request->teams_Title;            
+
+            $campus->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Teams title updated successfully!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
+    }
+
+    public function update_Teams_Description(Request $request){
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the campus that belongs to the campus admin
+            $campus = Campus::where('id', $campusAdmin->campusID)->first();
+
+            $campus->teams_Description = $request->teams_Description;            
+
+            $campus->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Teams description updated successfully!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
+    }
+
+    public function update_Leaders_Title(Request $request){
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the campus that belongs to the campus admin
+            $campus = Campus::where('id', $campusAdmin->campusID)->first();
+
+            $campus->leaders_Title = $request->leaders_Title;            
+
+            $campus->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Leaders title updated successfully!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
+    }
+
+    public function update_Leaders_BgColor(Request $request){
+        //check if session exsists
+        if ($request->session()->exists('userEmail')) {
+        
+            //first, get the campus admin
+            $campusAdmin = CampusAdmin::where('email', $request->session()->get('userEmail'))->first();
+            
+            //fetch the campus that belongs to the campus admin
+            $campus = Campus::where('id', $campusAdmin->campusID)->first();
+
+            $campus->leaders_BgColor = $request->leaders_BgColor;            
+
+            $campus->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Leaders background color updated successfully!',
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Not Logged in!',
+            ]);
+        }
     }
 
     /**

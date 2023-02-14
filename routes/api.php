@@ -53,7 +53,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/update-registration', [RegistrationController::Class, 'update']);
     Route::post('/update-footer', [FooterController::Class, 'update']);
     Route::post('/update-social', [SocialController::Class, 'update']);
-    Route::post('/update-gallery-title', [GalleryController::Class, 'update']); //May be implicit or part of other routes
+
+    // APIs to edit captions
+    // May be temporary or part of other routes
+    // For now, they are included in the campus controller, because the fields belong to the campus model    
+    Route::post('/update-services-title', [CampusController::Class, 'update_Services_Title']);
+    Route::post('/update-teams-title', [CampusController::Class, 'update_Teams_Title']);
+    Route::post('/update-teams-description', [CampusController::Class, 'update_Teams_Description']);
+    Route::post('/update-leaders-title', [CampusController::Class, 'update_Leaders_Title']);
+    Route::post('/update-leaders-bgcolor', [CampusController::Class, 'update_Leaders_BgColor']);
+    Route::post('/update-gallery-title', [CampusController::Class, 'update_Gallery_Title']);
 
     Route::post('/create-service', [ServiceController::Class, 'store']);
     Route::get('/get-services', [ServiceController::Class, 'show']);
