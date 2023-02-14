@@ -15,6 +15,8 @@ use App\Http\Controllers\API\RegistrationController;
 use App\Http\Controllers\API\FooterController;
 use App\Http\Controllers\API\SocialController;
 use App\Http\Controllers\API\ServiceController;
+use App\Http\Controllers\API\LeaderController;
+use App\Http\Controllers\API\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-services', [ServiceController::Class, 'show']);
     Route::post('/update-service', [ServiceController::Class, 'update']);
     Route::delete('/delete-service', [ServiceController::Class, 'destroy']);
+
+    Route::post('/create-leader', [LeaderController::Class, 'store']);
+    Route::get('/get-leaders', [LeaderController::Class, 'show']);
+    Route::post('/update-leader', [LeaderController::Class, 'update']);
+    Route::delete('/delete-leader', [LeaderController::Class, 'destroy']);
+
+    Route::post('/create-team', [TeamController::Class, 'store']);
+    Route::get('/get-teams', [TeamController::Class, 'show']);
+    Route::post('/update-team', [TeamController::Class, 'update']);
+    Route::delete('/delete-team', [TeamController::Class, 'destroy']);
 
 });
 

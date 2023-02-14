@@ -86,6 +86,8 @@ return [
         public_path('about_logo') => storage_path('app/public/about_logo'),
         public_path('about_bgImage') => storage_path('app/public/about_bgImage'),
         public_path('fellowship') => storage_path('app/public/fellowship'),
+        public_path('leaders') => storage_path('app/public/leaders'),
+        public_path('teams') => storage_path('app/public/teams'),
     ],
 
 ];
