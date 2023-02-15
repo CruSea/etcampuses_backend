@@ -26,10 +26,7 @@ class CampusController extends Controller
      */
     public function create(Request $request)
     {
-        if ($request->session()->exists('userEmail')) {
-
-            //Make sure this user is super-admin /////////////////////////////////////////////////
-
+        if ($request->session()->exists('userEmail')) {            
             $campus = new Campus();
             $campus->services_Title = 'Regular Programs';
             $campus->teams_Title = 'Teams waiting you';
