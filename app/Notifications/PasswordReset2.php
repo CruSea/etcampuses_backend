@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\CampusAdmin;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class PasswordReset2 extends Notification{
@@ -17,7 +17,7 @@ class PasswordReset2 extends Notification{
      *
      * @return void
      */
-    public function __construct(public CampusAdmin $campusAdmin, public String $resetKey)
+    public function __construct(public User $user, public String $resetKey)
     {
         //
     }
@@ -43,7 +43,7 @@ class PasswordReset2 extends Notification{
     {
         return (new MailMessage)
                     ->subject('Your Password Reset Link')
-                    ->greeting('Hello, ' . $this->campusAdmin->firstName)
+                    ->greeting('Hello, ' . $this->user->firstName)
                     ->line('You are receiving this email because we received a password reset request for your account.')
                     ->line('Click the button below to reset your password:')
                     ->action('Reset Password', url('https://localhost:8000/reset-password/' . $this->resetKey)) //React URL plus uuid                    

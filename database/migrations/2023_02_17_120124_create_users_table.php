@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('campusadmin', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->String('firstName');
             $table->String('lastName');
             $table->String('email')->unique()->collation('latin1_general_cs');
             $table->String('password')->collation('latin1_general_cs');
             $table->String('phone')->unique();
-            $table->unsignedBigInteger('campusID');
-            $table->foreign('campusID')->references('id')->on('campuses')->onUpdate('cascade')->onDelete('cascade');
-            $table->String('approvedBy')->nullable(); //temporarily nullable
+            $table->unsignedBigInteger('promotedBy');
+            $table->String('profilePicture');
+            $table->String('theme');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campusadmin');
+        Schema::dropIfExists('users');
     }
 };

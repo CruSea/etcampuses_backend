@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Authenticate
 {
-    public function handle(Request $request) //To check if users are logged in
+    public function handle(Request $request) //To check if users are logged in; used for middleware
     {
         //check if session exsists
         if ($request->session()->exists('userEmail')) {

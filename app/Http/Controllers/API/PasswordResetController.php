@@ -52,15 +52,6 @@ class PasswordResetController extends Controller
                 'message' => 'Email does not exist!',
             ]);
         }
-
-        /* Previous password reset method
-        $passwordReset = new PasswordResetModel();
-        $passwordReset->resetKey = (string) Str::uuid();
-        $passwordReset->email = $request->input('email');
-        $passwordReset->save();
-        */
-
-        //check if password reset was requested earlier
         
 
         $resetKey = (string) Str::uuid();
