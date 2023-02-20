@@ -27,13 +27,13 @@ class AboutController extends Controller
      */
     public function create(int $id)
     {
-        $about = new About();
-        $about->campusID = $id;
-        $about->title = 'About Campus';
-        $about->description = 'Say something about your campus';
-        $about->logo = '';
-        $about->bgImage = '';
-        $about->save();
+        // $about = new About();
+        // $about->campusID = $id;
+        // $about->title = 'About Campus';
+        // $about->description = 'Say something about your campus';
+        // $about->logo = '';
+        // $about->bgImage = '';
+        // $about->save();
     }
 
 

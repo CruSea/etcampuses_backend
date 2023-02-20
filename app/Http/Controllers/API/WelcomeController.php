@@ -27,14 +27,14 @@ class WelcomeController extends Controller
      */
     public function create(int $id)
     {
-        $welcome = new Welcome();
-        $welcome->campusID = $id;
-        $welcome->image = '';
-        $welcome->title = 'Welcome to <Your City>';
-        $welcome->campusName = '<Your Campus Name>';
-        $welcome->moto = 'Put your campus moto here';
-        $welcome->registerButtonText = 'Register Now';
-        $welcome->save();
+        // $welcome = new Welcome();
+        // $welcome->campusID = $id;
+        // $welcome->image = '';
+        // $welcome->title = 'Welcome to <Your City>';
+        // $welcome->campusName = '<Your Campus Name>';
+        // $welcome->moto = 'Put your campus moto here';
+        // $welcome->registerButtonText = 'Register Now';
+        // $welcome->save();
     }
 
     /**

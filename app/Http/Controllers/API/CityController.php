@@ -26,12 +26,12 @@ class CityController extends Controller
      */
     public function create(int $id)
     {
-        $city = new City();
-        $city->campusID = $id;
-        $city->title = 'Our City';
-        $city->description = 'Say something about your city';
-        $city->name = 'Your City Name';
-        $city->save();
+        // $city = new City();
+        // $city->campusID = $id;
+        // $city->title = 'Our City';
+        // $city->description = 'Say something about your city';
+        // $city->name = 'Your City Name';
+        // $city->save();
     }
 
     /**

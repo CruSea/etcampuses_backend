@@ -2,9 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\CampusAdminController;
-use App\Http\Controllers\API\PasswordResetController;
-use App\Http\Controllers\API\GalleryController;
+use App\Http\Controllers\API\Version_1\Update_Campus\GalleryController;
 use App\Http\Controllers\API\CampusController;
 use App\Http\Controllers\API\WelcomeController;
 use App\Http\Controllers\API\IntroController;
@@ -19,6 +17,8 @@ use App\Http\Controllers\API\LeaderController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\API\StudentController;
 use App\Http\Controllers\API\Version_1\Auth\AuthController;
+use App\Http\Controllers\API\Version_1\Create_Campus\SignupController;
+use App\Http\Controllers\API\Version_1\Create_Campus\CreateNewCampusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,16 +35,18 @@ use App\Http\Controllers\API\Version_1\Auth\AuthController;
 
 Route::post('/reset-password-request', [AuthController::Class, 'passwordResetRequest']); // to request password reset
 Route::post('/reset-password', [AuthController::Class, 'passwordReset']); // to reset password after link is clicked
+Route::post('/signup', [SignupController::Class, 'signup']);
+
 
 Route::group(['middleware' => ['web']], function () { // routes that require session must be placed here
     Route::get('/login', [AuthController::Class, 'login']);
     Route::get('/logout', [AuthController::Class, 'logout']);
     Route::post('/changepassword',[AuthController::Class, 'changePassword'])->middleware('user.auth');
 
-    Route::post('/upload-gallery-image', [GalleryController::Class, 'store'])->middleware('user.auth');
-    Route::delete('/delete-gallery-image', [GalleryController::Class, 'destroy'])->middleware('user.auth');
+    Route::post('/create-new-campus', [CreateNewCampusController::Class, 'create_New_Campus'])->middleware('user.auth');
 
-    Route::post('/create-campus', [CampusController::Class, 'create'])->middleware('user.auth');
+    Route::post('/upload-gallery-image', [GalleryController::Class, 'upload'])->middleware('user.auth');
+    Route::delete('/delete-gallery-image', [GalleryController::Class, 'delete'])->middleware('user.auth');
 
     Route::post('/update-welcome', [WelcomeController::Class, 'update'])->middleware('user.auth');
     Route::post('/update-intro', [IntroController::Class, 'update'])->middleware('user.auth');
