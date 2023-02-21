@@ -15,7 +15,7 @@ class Update_Footer_Section
     {
         //campus admin authorization
 
-        //retrieve user id from users table
+        // first, get the user
         $user = User::where('email', $request->session()->get('userEmail'))->first();
 
         //make sure the user has access to the provided campus
@@ -27,6 +27,28 @@ class Update_Footer_Section
                 'message' => 'Unauthorized',
             ],);
         }
+            
+        //fetch the footer after authorization
+        $footer = Footer::where('campusID', $request->campusID)->first();
+
+        // some of the fields are not updated for now
+        $footer->socialMediasCaption = $request->socialMediasCaption;
+        $footer->bgColor = $request->bgColor;
+        $footer->contactUsCaption = $request->contactUsCaption;
+        $footer->email = $request->email;
+        $footer->phone = $request->phone;
+        $footer->findUsCaption = $request->findUsCaption;
+        //$footer->termsAndConditions = $request->termsAndConditions;
+        //$footer->termsAndConditionsCaption = $request->termsAndConditionsCaption;
+        $footer->mapLink = $request->mapLink;
+        $footer->copyrightCaption = $request->copyrightCaption;
+
+        $footer->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update successful!',
+        ]);
 
         
     }

@@ -15,7 +15,7 @@ class Update_Fellowship_Section
     {
         //campus admin authorization
 
-        //retrieve user id from users table
+        // first, get the user
         $user = User::where('email', $request->session()->get('userEmail'))->first();
 
         //make sure the user has access to the provided campus
@@ -27,6 +27,41 @@ class Update_Fellowship_Section
                 'message' => 'Unauthorized',
             ],);
         }
+            
+        //fetch the fellowship after authorization
+        $fellowship = Fellowship::where('campusID', $request->campusID)->first();
+
+        //check if file is uploaded
+        if ($request->hasFile('image')) {
+            //image validation
+            $validated = $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+
+            //delete the old image if it exists
+            if ($fellowship->image != '') {
+                Storage::delete($fellowship->image);
+            }
+
+            $path = $request->image->storePublicly('fellowship','public');
+            $fellowship->image = $path;
+        }
+
+        $fellowship->title = $request->title;
+        $fellowship->members = $request->members;
+        //$fellowship->membersCaption = $request->membersCaption;   //not currently updated
+        $fellowship->teams = $request->teams;
+        //$fellowship->teamsCaption = $request->teamsCaption;    //not currently updated
+        $fellowship->services = $request->services;
+        //$fellowship->servicesCaption = $request->servicesCaption;    //not currently updated
+        $fellowship->bgColor = $request->bgColor;
+
+        $fellowship->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update successful!',
+        ]);
 
         
     }

@@ -15,7 +15,7 @@ class Update_Intro_Section
     {
         //campus admin authorization
 
-        //retrieve user id from users table
+        // first, get the user
         $user = User::where('email', $request->session()->get('userEmail'))->first();
 
         //make sure the user has access to the provided campus
@@ -27,6 +27,37 @@ class Update_Intro_Section
                 'message' => 'Unauthorized',
             ],);
         }
+            
+        //fetch the intro after authorization
+        $intro = Intro::where('campusID', $request->campusID)->first();
+
+        //check if file is uploaded
+        if ($request->hasFile('image')) {
+            //image validation
+            $validated = $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+
+            //delete the old image if it exists
+            if ($intro->image != '') {
+                Storage::delete($intro->image);
+            }
+
+            $path = $request->image->storePublicly('intro','public');
+            $intro->image = $path;
+        }
+
+        $intro->title = $request->title;
+        $intro->message = $request->message;
+        $intro->author = $request->author;
+        $intro->authorPosition = $request->authorPosition;
+
+        $intro->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update successful!',
+        ]);
 
         
     }

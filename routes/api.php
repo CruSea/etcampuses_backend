@@ -3,15 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Version_1\Update_Campus\GalleryController;
-use App\Http\Controllers\API\CampusController;
-use App\Http\Controllers\API\WelcomeController;
-use App\Http\Controllers\API\IntroController;
-use App\Http\Controllers\API\CityController;
-use App\Http\Controllers\API\AboutController;
-use App\Http\Controllers\API\FellowshipController;
-use App\Http\Controllers\API\RegistrationController;
-use App\Http\Controllers\API\FooterController;
-use App\Http\Controllers\API\SocialController;
+use App\Http\Controllers\API\Version_1\Update_Campus\UpdateCampusCaptionsController;
 use App\Http\Controllers\API\ServiceController;
 use App\Http\Controllers\API\LeaderController;
 use App\Http\Controllers\API\TeamController;
@@ -19,6 +11,7 @@ use App\Http\Controllers\API\StudentController;
 use App\Http\Controllers\API\Version_1\Auth\AuthController;
 use App\Http\Controllers\API\Version_1\Create_Campus\SignupController;
 use App\Http\Controllers\API\Version_1\Create_Campus\CreateNewCampusController;
+use App\Http\Controllers\API\Version_1\Update_Campus\UpdateCampusContentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,24 +41,24 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::post('/upload-gallery-image', [GalleryController::Class, 'upload'])->middleware('user.auth');
     Route::delete('/delete-gallery-image', [GalleryController::Class, 'delete'])->middleware('user.auth');
 
-    Route::post('/update-welcome', [WelcomeController::Class, 'update'])->middleware('user.auth');
-    Route::post('/update-intro', [IntroController::Class, 'update'])->middleware('user.auth');
-    Route::post('/update-city', [CityController::Class, 'update'])->middleware('user.auth');
-    Route::post('/update-about', [AboutController::Class, 'update'])->middleware('user.auth');
-    Route::post('/update-fellowship', [FellowshipController::Class, 'update'])->middleware('user.auth');
-    Route::post('/update-registration', [RegistrationController::Class, 'update'])->middleware('user.auth');
-    Route::post('/update-footer', [FooterController::Class, 'update'])->middleware('user.auth');
-    Route::post('/update-social', [SocialController::Class, 'update'])->middleware('user.auth');
+    Route::post('/update-welcome', [UpdateCampusContentController::Class, 'update_Welcome_Section'])->middleware('user.auth');
+    Route::post('/update-intro', [UpdateCampusContentController::Class, 'update_Intro_Section'])->middleware('user.auth');
+    Route::post('/update-city', [UpdateCampusContentController::Class, 'update_City_Section'])->middleware('user.auth');
+    Route::post('/update-about', [UpdateCampusContentController::Class, 'update_About_Section'])->middleware('user.auth');
+    Route::post('/update-fellowship', [UpdateCampusContentController::Class, 'update_Fellowship_Section'])->middleware('user.auth');
+    Route::post('/update-registration', [UpdateCampusContentController::Class, 'update_Registration_Section'])->middleware('user.auth');
+    Route::post('/update-footer', [UpdateCampusContentController::Class, 'update_Footer_Section'])->middleware('user.auth');
+    Route::post('/update-social', [UpdateCampusContentController::Class, 'update_Social_Section'])->middleware('user.auth');
 
     // APIs to edit captions
     // May be temporary or part of other routes
     // For now, they are included in the campus controller, because the fields belong to the campus model    
-    Route::post('/update-services-title', [CampusController::Class, 'update_Services_Title'])->middleware('user.auth');
-    Route::post('/update-teams-title', [CampusController::Class, 'update_Teams_Title'])->middleware('user.auth');
-    Route::post('/update-teams-description', [CampusController::Class, 'update_Teams_Description'])->middleware('user.auth');
-    Route::post('/update-leaders-title', [CampusController::Class, 'update_Leaders_Title'])->middleware('user.auth');
-    Route::post('/update-leaders-bgcolor', [CampusController::Class, 'update_Leaders_BgColor'])->middleware('user.auth');
-    Route::post('/update-gallery-title', [CampusController::Class, 'update_Gallery_Title'])->middleware('user.auth');
+    Route::post('/update-services-title', [UpdateCampusCaptionsController::Class, 'update_Services_Title'])->middleware('user.auth');
+    Route::post('/update-teams-title', [UpdateCampusCaptionsController::Class, 'update_Teams_Title'])->middleware('user.auth');
+    Route::post('/update-teams-description', [UpdateCampusCaptionsController::Class, 'update_Teams_Description'])->middleware('user.auth');
+    Route::post('/update-leaders-title', [UpdateCampusCaptionsController::Class, 'update_Leaders_Title'])->middleware('user.auth');
+    Route::post('/update-leaders-bgcolor', [UpdateCampusCaptionsController::Class, 'update_Leaders_BgColor'])->middleware('user.auth');
+    Route::post('/update-gallery-title', [UpdateCampusCaptionsController::Class, 'update_Gallery_Title'])->middleware('user.auth');
 
     Route::post('/create-service', [ServiceController::Class, 'store'])->middleware('user.auth');
     Route::get('/get-services', [ServiceController::Class, 'show'])->middleware('user.auth');

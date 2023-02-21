@@ -15,7 +15,7 @@ class Update_About_Section
     {
         //campus admin authorization
 
-        //retrieve user id from users table
+        // first, get the user
         $user = User::where('email', $request->session()->get('userEmail'))->first();
 
         //make sure the user has access to the provided campus
@@ -27,6 +27,53 @@ class Update_About_Section
                 'message' => 'Unauthorized',
             ],);
         }
+            
+        //fetch the about after authorization
+        $about = About::where('campusID', $request->campusID)->first();
+
+        //check if logo is uploaded
+        if ($request->hasFile('logo')) {
+            //image validation
+            $validated = $request->validate([
+                'logo' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+
+            //delete the old image if it exists
+            if($about->logo != ''){
+                Storage::delete($about->logo);
+            }                
+
+            $path = $request->logo->storePublicly('about_logo','public');
+            $about->logo = $path;
+        }
+
+        //check if background image is uploaded
+        if ($request->hasFile('bgImage')) {
+            //image validation
+            $validated = $request->validate([
+                'bgImage' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+
+            //delete the old image if it exists
+            if($about->bgImage != ''){
+                Storage::delete($about->bgImage);
+            }                
+
+            $path = $request->bgImage->storePublicly('about_bgImage','public');
+            $about->bgImage = $path;
+        }
+
+
+
+        $about->title = $request->title;
+        $about->description = $request->description;
+
+        $about->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update successful!',
+        ]);
 
         
     }

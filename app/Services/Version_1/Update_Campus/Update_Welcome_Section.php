@@ -15,7 +15,7 @@ class Update_Welcome_Section
     {
         //campus admin authorization
 
-        //retrieve user id from users table
+        // first, get the user
         $user = User::where('email', $request->session()->get('userEmail'))->first();
 
         //make sure the user has access to the provided campus
@@ -27,7 +27,37 @@ class Update_Welcome_Section
                 'message' => 'Unauthorized',
             ],);
         }
+            
+        //fetch the welcome after authorization
+        $welcome = Welcome::where('campusID', $request->campusID)->first();
 
-        
+        //check if file is uploaded
+        if ($request->hasFile('image')) {
+            //image validation
+            $validated = $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+
+            //delete the old image if it exists
+            if($welcome->image != ''){
+                Storage::delete($welcome->image);
+            }                
+
+            $path = $request->image->storePublicly('welcome','public');
+            $welcome->image = $path;
+        }
+
+        $welcome->title = $request->input('title');
+        $welcome->campusName = $request->campusName;
+        $welcome->moto = $request->moto;
+        $welcome->registerButtonText = $request->registerButtonText;
+
+        $welcome->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update successful!',
+        ]);
+
     }
 }

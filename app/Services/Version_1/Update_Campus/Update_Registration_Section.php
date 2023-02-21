@@ -15,7 +15,7 @@ class Update_Registration_Section
     {
         //campus admin authorization
 
-        //retrieve user id from users table
+        // first, get the user
         $user = User::where('email', $request->session()->get('userEmail'))->first();
 
         //make sure the user has access to the provided campus
@@ -27,6 +27,33 @@ class Update_Registration_Section
                 'message' => 'Unauthorized',
             ],);
         }
+            
+        //fetch the welcome after authorization
+        $registration = Registration::where('campusID', $request->campusID)->first();
+
+        // some of the fields are not updated for now
+        $registration->title = $request->title;
+        $registration->description = $request->description;
+        //$registration->firstNameCaption = $request->firstNameCaption;
+        //$registration->lastNameCaption = $request->lastNameCaption;
+        //$registration->cityCaption = $request->cityCaption;
+        //$registration->languageCaption = $request->languageCaption;
+        //$registration->sexCaption = $request->sexCaption;
+        //$registration->maleCaption = $request->maleCaption;
+        //$registration->femaleCaption = $request->femaleCaption;
+        //$registration->phoneNumberCaption = $request->phoneNumberCaption;
+        //$registration->isHostAvailableCaption = $request->isHostAvailableCaption;
+        //$registration->yesCaption = $request->yesCaption;
+        //$registration->noCaption =  $request->noCaption;
+        $registration->buttonName = $request->buttonName;
+        $registration->bgColor = $request->bgColor;
+
+        $registration->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update successful!',
+        ]);
 
         
     }
