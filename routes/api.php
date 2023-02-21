@@ -4,10 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Version_1\Update_Campus\GalleryController;
 use App\Http\Controllers\API\Version_1\Update_Campus\UpdateCampusCaptionsController;
-use App\Http\Controllers\API\ServiceController;
-use App\Http\Controllers\API\LeaderController;
-use App\Http\Controllers\API\TeamController;
-use App\Http\Controllers\API\StudentController;
+use App\Http\Controllers\API\Version_1\Update_Campus\ServiceController;
+use App\Http\Controllers\API\Version_1\Update_Campus\LeaderController;
+use App\Http\Controllers\API\Version_1\Update_Campus\TeamController;
+use App\Http\Controllers\API\Version_1\Update_Campus\StudentController;
 use App\Http\Controllers\API\Version_1\Auth\AuthController;
 use App\Http\Controllers\API\Version_1\Create_Campus\SignupController;
 use App\Http\Controllers\API\Version_1\Create_Campus\CreateNewCampusController;
@@ -52,7 +52,6 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
 
     // APIs to edit captions
     // May be temporary or part of other routes
-    // For now, they are included in the campus controller, because the fields belong to the campus model    
     Route::post('/update-services-title', [UpdateCampusCaptionsController::Class, 'update_Services_Title'])->middleware('user.auth');
     Route::post('/update-teams-title', [UpdateCampusCaptionsController::Class, 'update_Teams_Title'])->middleware('user.auth');
     Route::post('/update-teams-description', [UpdateCampusCaptionsController::Class, 'update_Teams_Description'])->middleware('user.auth');
@@ -60,24 +59,24 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::post('/update-leaders-bgcolor', [UpdateCampusCaptionsController::Class, 'update_Leaders_BgColor'])->middleware('user.auth');
     Route::post('/update-gallery-title', [UpdateCampusCaptionsController::Class, 'update_Gallery_Title'])->middleware('user.auth');
 
-    Route::post('/create-service', [ServiceController::Class, 'store'])->middleware('user.auth');
-    Route::get('/get-services', [ServiceController::Class, 'show'])->middleware('user.auth');
-    Route::post('/update-service', [ServiceController::Class, 'update'])->middleware('user.auth');
-    Route::delete('/delete-service', [ServiceController::Class, 'destroy'])->middleware('user.auth');
+    Route::post('/create-service', [ServiceController::Class, 'create_Service'])->middleware('user.auth');
+    Route::get('/get-services', [ServiceController::Class, 'get_Services'])->middleware('user.auth');
+    Route::post('/update-service', [ServiceController::Class, 'update_Service'])->middleware('user.auth');
+    Route::delete('/delete-service', [ServiceController::Class, 'delete_Service'])->middleware('user.auth');
 
-    Route::post('/create-leader', [LeaderController::Class, 'store'])->middleware('user.auth');
-    Route::get('/get-leaders', [LeaderController::Class, 'show'])->middleware('user.auth');
-    Route::post('/update-leader', [LeaderController::Class, 'update'])->middleware('user.auth');
-    Route::delete('/delete-leader', [LeaderController::Class, 'destroy'])->middleware('user.auth');
+    Route::post('/create-leader', [LeaderController::Class, 'create_Leader'])->middleware('user.auth');
+    Route::get('/get-leaders', [LeaderController::Class, 'get_Leaders'])->middleware('user.auth');
+    Route::post('/update-leader', [LeaderController::Class, 'update_Leader'])->middleware('user.auth');
+    Route::delete('/delete-leader', [LeaderController::Class, 'delete_Leader'])->middleware('user.auth');
 
-    Route::post('/create-team', [TeamController::Class, 'store'])->middleware('user.auth');
-    Route::get('/get-teams', [TeamController::Class, 'show'])->middleware('user.auth');
-    Route::post('/update-team', [TeamController::Class, 'update'])->middleware('user.auth');
-    Route::delete('/delete-team', [TeamController::Class, 'destroy'])->middleware('user.auth');
+    Route::post('/create-team', [TeamController::Class, 'create_Team'])->middleware('user.auth');
+    Route::get('/get-teams', [TeamController::Class, 'get_Teams'])->middleware('user.auth');
+    Route::post('/update-team', [TeamController::Class, 'update_Team'])->middleware('user.auth');
+    Route::delete('/delete-team', [TeamController::Class, 'delete_Team'])->middleware('user.auth');
     
-    Route::post('/create-student', [StudentController::Class, 'store']); //Creating students shouldn't be authenticated
-    Route::get('/get-students', [StudentController::Class, 'show'])->middleware('user.auth');
-    Route::post('/update-student', [StudentController::Class, 'update'])->middleware('user.auth');
-    Route::delete('/delete-student', [StudentController::Class, 'destroy'])->middleware('user.auth');
+    Route::post('/create-student', [StudentController::Class, 'create_Student']); //Creating students shouldn't be authenticated
+    Route::get('/get-students', [StudentController::Class, 'get_Students'])->middleware('user.auth');
+    Route::post('/update-student', [StudentController::Class, 'update_Student'])->middleware('user.auth');
+    Route::delete('/delete-student', [StudentController::Class, 'delete_Student'])->middleware('user.auth');
 
 });
