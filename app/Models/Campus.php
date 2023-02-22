@@ -17,6 +17,9 @@ class Campus extends Model
         'leaders_Title',
         'leaders_BgColor',
         'gallery_Title',
-        'isBlocked'
+        'isBlocked',
+        'url',
+        'isPublished',
+        'owner'        
     ];
 }

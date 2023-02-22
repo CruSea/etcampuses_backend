@@ -26,6 +26,7 @@ class Create_Registration_Section
         $registration->noCaption = 'No';
         $registration->buttonName = 'Register';
         $registration->bgColor = 'rgba(255, 217, 131, 0.21)';
+        $registration->churchCaption = 'Church';
         $registration->save();   
     }
 }

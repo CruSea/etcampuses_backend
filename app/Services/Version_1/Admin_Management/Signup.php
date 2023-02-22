@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 
-class Create_Admin
+class Signup
 {
     public function handle(Request $request)
     {
@@ -29,6 +29,11 @@ class Create_Admin
         $user->promotedBy = 0; //Just for placeholder, modified below
         $user->profilePicture = '';
         $user->theme = 'light';
+
+        $user->status = 'active';
+        $user->lastActivityTimestamp = '';
+        $user->lastUsedDevice = '';
+
         $user->save();
 
         //signed up users are promoted by themselves

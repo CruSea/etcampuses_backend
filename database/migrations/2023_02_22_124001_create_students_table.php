@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('sex');
             $table->string('phone');
             $table->boolean('isHostAvailable');
+            $table->string('church');
             $table->timestamps();
         });
     }

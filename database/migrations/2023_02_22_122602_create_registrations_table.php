@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('noCaption');
             $table->string('buttonName');
             $table->string('bgColor');
+            $table->string('churchCaption');
+            $table->boolean('isVisible')->default(true);
             $table->timestamps();
         });
     }

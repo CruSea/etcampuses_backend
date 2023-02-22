@@ -18,6 +18,7 @@ class Student extends Model
         'language',
         'sex',
         'phone',
-        'isHostAvailable'
+        'isHostAvailable',
+        'church'
     ];
 }

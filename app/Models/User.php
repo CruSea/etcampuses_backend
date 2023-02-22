@@ -20,7 +20,10 @@ class User extends Model
         'phone',
         'promotedBy',
         'profilePicture',
-        'theme'
+        'theme',
+        'status',
+        'lastActivityTimestamp',
+        'lastUsedDevice'
     ];
 
 }

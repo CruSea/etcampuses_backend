@@ -8,6 +8,7 @@ use App\Models\Campus;
 use App\Models\User;
 use App\Models\User_Role;
 use App\Services\Version_1\Admin_Management\Create_Admin;
+use Illuminate\Support\Str;
 
 class Create_Campus
 {
@@ -26,6 +27,15 @@ class Create_Campus
         $campus->leaders_Title = 'Our Leaders';
         $campus->leaders_BgColor = 'rgba(3, 163, 245, 0.09)';
         $campus->gallery_Title = 'Gallery';
+        $campus->owner = $user->firstName . ' ' . $user->lastName;        
+        $campus->url = ''; //just for placeholder, modified below
+        $campus->save();
+
+        $newURL = (string) Str::uuid(); // generate new URL for campus
+
+        //set campus URL
+        $campus->url = $campus->id . $newURL; //campus ID is seeded to ensure uniqueness
+
         $campus->save();
 
         //create welcome instance     

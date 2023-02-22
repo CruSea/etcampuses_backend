@@ -38,6 +38,7 @@ class Create_Student
         $student->language = $request->language;
         $student->sex = $request->sex;
         $student->phone = $request->phone;
+        $student->church = $request->church;
         $student->isHostAvailable = $request->isHostAvailable;           
                             
         $student->save();

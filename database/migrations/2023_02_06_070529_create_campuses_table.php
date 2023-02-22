@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('leaders_BgColor');
             $table->string('gallery_Title');
             $table->boolean('isBlocked')->default(false);
+            $table->string('url');
+            $table->boolean('isPublished')->default(false);
+            $table->string('owner');
             $table->timestamps();
         });
     }

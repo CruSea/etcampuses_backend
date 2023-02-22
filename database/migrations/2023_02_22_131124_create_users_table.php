@@ -23,6 +23,9 @@ return new class extends Migration
             $table->unsignedBigInteger('promotedBy');
             $table->String('profilePicture');
             $table->String('theme');
+            $table->string('status');
+            $table->string('lastActivityTimestamp');
+            $table->string('lastUsedDevice');
             $table->timestamps();
         });
     }

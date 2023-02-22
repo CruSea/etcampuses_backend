@@ -26,6 +26,8 @@ class Registration extends Model
         'yesCaption',
         'noCaption',
         'buttonName',
-        'bgColor'
+        'bgColor',
+        'churchCaption',
+        'isVisible'
     ];
 }
