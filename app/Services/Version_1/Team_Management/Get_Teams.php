@@ -11,15 +11,20 @@ use Illuminate\Support\Facades\Storage;
 
 class Get_Teams
 {
-    public function handle(Request $request)
+    public function handle(Request $request, String $campusID = '')
     {
+        //if campusID is not provided, use the default value from request
+        if($campusID == ''){
+            $campusID = $request->campusID;
+        }
+
         //campus admin authorization
 
         // first, get the user
         $user = User::where('email', $request->session()->get('userEmail'))->first();
 
         //make sure the user has access to the provided campus
-        $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
+        $hasAcess = User_Role::where('userID', $user->id)->where('role', $campusID)->first();
 
         if($hasAcess == null){
             return response()->json([
@@ -29,7 +34,7 @@ class Get_Teams
         }
             
         //get all teams for the campus
-        $teams = Team::where('campusID', $request->campusID)->get();
+        $teams = Team::where('campusID', $campusID)->get();
 
         
         return response()->json([

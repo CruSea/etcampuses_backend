@@ -12,6 +12,7 @@ use App\Http\Controllers\API\Version_1\Auth\AuthController;
 use App\Http\Controllers\API\Version_1\Create_Campus\SignupController;
 use App\Http\Controllers\API\Version_1\Create_Campus\CreateNewCampusController;
 use App\Http\Controllers\API\Version_1\Update_Campus\UpdateCampusContentController;
+use App\Http\Controllers\API\Version_1\View_Campus\ViewCampusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,5 +85,9 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::get('/get-students', [StudentController::Class, 'get_Students'])->middleware('user.auth');
     Route::post('/update-student', [StudentController::Class, 'update_Student'])->middleware('user.auth');
     Route::delete('/delete-student', [StudentController::Class, 'delete_Student'])->middleware('user.auth');
+
+    Route::get('/{campusURL}', function (ViewCampusController $viewCampusController, String $campusURL, Request $request) {
+        return $viewCampusController->view_Campus($request, $campusURL);
+    });
 
 });
