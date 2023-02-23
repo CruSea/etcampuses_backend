@@ -46,18 +46,24 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::post('/update-city', [UpdateCampusContentController::Class, 'update_City_Section'])->middleware('user.auth');
     Route::post('/update-about', [UpdateCampusContentController::Class, 'update_About_Section'])->middleware('user.auth');
     Route::post('/update-fellowship', [UpdateCampusContentController::Class, 'update_Fellowship_Section'])->middleware('user.auth');
-    Route::post('/update-registration', [UpdateCampusContentController::Class, 'update_Registration_Section'])->middleware('user.auth');
+    //Registration is not allowed to be updated
+    //Route::post('/update-registration', [UpdateCampusContentController::Class, 'update_Registration_Section'])->middleware('user.auth');
     Route::post('/update-footer', [UpdateCampusContentController::Class, 'update_Footer_Section'])->middleware('user.auth');
+    //update social api is merged into update footer api
+    //this is just additional api
     Route::post('/update-social', [UpdateCampusContentController::Class, 'update_Social_Section'])->middleware('user.auth');
 
     // APIs to edit captions
     // May be temporary or part of other routes
+    // These Routes are hidden for now
+    /*
     Route::post('/update-services-title', [UpdateCampusCaptionsController::Class, 'update_Services_Title'])->middleware('user.auth');
     Route::post('/update-teams-title', [UpdateCampusCaptionsController::Class, 'update_Teams_Title'])->middleware('user.auth');
     Route::post('/update-teams-description', [UpdateCampusCaptionsController::Class, 'update_Teams_Description'])->middleware('user.auth');
     Route::post('/update-leaders-title', [UpdateCampusCaptionsController::Class, 'update_Leaders_Title'])->middleware('user.auth');
     Route::post('/update-leaders-bgcolor', [UpdateCampusCaptionsController::Class, 'update_Leaders_BgColor'])->middleware('user.auth');
     Route::post('/update-gallery-title', [UpdateCampusCaptionsController::Class, 'update_Gallery_Title'])->middleware('user.auth');
+    */
 
     Route::post('/create-service', [ServiceController::Class, 'create_Service'])->middleware('user.auth');
     Route::get('/get-services', [ServiceController::Class, 'get_Services'])->middleware('user.auth');

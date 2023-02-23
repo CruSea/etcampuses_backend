@@ -50,7 +50,9 @@ class Update_Welcome_Section
         $welcome->title = $request->input('title');
         $welcome->campusName = $request->campusName;
         $welcome->moto = $request->moto;
-        $welcome->registerButtonText = $request->registerButtonText;
+
+        //modifying button text is not allowed for now
+        //$welcome->registerButtonText = $request->registerButtonText;
 
         $welcome->save();
 

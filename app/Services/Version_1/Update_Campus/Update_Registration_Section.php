@@ -46,8 +46,8 @@ class Update_Registration_Section
         //$registration->yesCaption = $request->yesCaption;
         //$registration->noCaption =  $request->noCaption;
         //$registration->churchCaption = $request->churchCaption;
-        $registration->buttonName = $request->buttonName;
-        $registration->bgColor = $request->bgColor;
+        //$registration->buttonName = $request->buttonName;
+        //$registration->bgColor = $request->bgColor;
 
         $registration->save();
 

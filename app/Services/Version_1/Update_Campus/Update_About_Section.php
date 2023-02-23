@@ -64,8 +64,9 @@ class Update_About_Section
         }
 
 
+        //modifying title is not allowed for now
+        //$about->title = $request->title;
 
-        $about->title = $request->title;
         $about->description = $request->description;
 
         $about->save();

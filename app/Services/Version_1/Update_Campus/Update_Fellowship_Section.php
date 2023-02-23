@@ -47,14 +47,18 @@ class Update_Fellowship_Section
             $fellowship->image = $path;
         }
 
-        $fellowship->title = $request->title;
+        //modifying this feature is not allowed for now
+        //$fellowship->title = $request->title;
+
         $fellowship->members = $request->members;
         //$fellowship->membersCaption = $request->membersCaption;   //not currently updated
         $fellowship->teams = $request->teams;
         //$fellowship->teamsCaption = $request->teamsCaption;    //not currently updated
         $fellowship->services = $request->services;
         //$fellowship->servicesCaption = $request->servicesCaption;    //not currently updated
-        $fellowship->bgColor = $request->bgColor;
+
+        //modifying this feature is not allowed for now
+        //$fellowship->bgColor = $request->bgColor;
 
         $fellowship->save();
 

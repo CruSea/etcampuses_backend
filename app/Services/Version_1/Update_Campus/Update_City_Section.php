@@ -31,16 +31,18 @@ class Update_City_Section
         //fetch the city after authorization
         $city = City::where('campusID', $request->campusID)->first();
 
-        $city->title = $request->title;
-            $city->description = $request->description;
-            $city->name = $request->name;
+        //modifying title is not allowed for now
+        //$city->title = $request->title;
 
-            $city->save();
+        $city->description = $request->description;
+        $city->name = $request->name;
 
-            return response()->json([
-                'status' => 200,
-                'message' => 'Update successful!',
-            ]);
+        $city->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update successful!',
+        ]);
 
         
     }

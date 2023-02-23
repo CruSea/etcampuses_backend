@@ -32,18 +32,22 @@ class Update_Footer_Section
         $footer = Footer::where('campusID', $request->campusID)->first();
 
         // some of the fields are not updated for now
-        $footer->socialMediasCaption = $request->socialMediasCaption;
-        $footer->bgColor = $request->bgColor;
-        $footer->contactUsCaption = $request->contactUsCaption;
+        //$footer->socialMediasCaption = $request->socialMediasCaption;
+        //$footer->bgColor = $request->bgColor;
+        //$footer->contactUsCaption = $request->contactUsCaption;
         $footer->email = $request->email;
         $footer->phone = $request->phone;
-        $footer->findUsCaption = $request->findUsCaption;
+        //$footer->findUsCaption = $request->findUsCaption;
         //$footer->termsAndConditions = $request->termsAndConditions;
         //$footer->termsAndConditionsCaption = $request->termsAndConditionsCaption;
         $footer->mapLink = $request->mapLink;
-        $footer->copyrightCaption = $request->copyrightCaption;
+        //$footer->copyrightCaption = $request->copyrightCaption;
 
         $footer->save();
+
+        //call the update social media service
+        $social = new Update_Social_Section();
+        $social->handle($request);
 
         return response()->json([
             'status' => 200,

@@ -47,7 +47,9 @@ class Update_Intro_Section
             $intro->image = $path;
         }
 
-        $intro->title = $request->title;
+        //modifying title is not allowed for now
+        //$intro->title = $request->title;
+
         $intro->message = $request->message;
         $intro->author = $request->author;
         $intro->authorPosition = $request->authorPosition;
