@@ -1,38 +1,96 @@
-version: '3.8'
+version: '3.7'
 
 services:
 
-    #php service
-    php:
+    # PHP-FPM Service
+    app:
         build:
             context: .
-            target: php
-            args:
-                - APP_ENV=${APP_ENV}
-        environment:
-            - APP_ENV=${APP_ENV}
-            - CONTAINER_ROLE=app
+            dockerfile: Dockerfile
+            
+        container_name: app
+        restart: unless-stopped
+        tty: true
         working_dir: /var/www
+        
         volumes:
             - ./:/var/www
+            - ./docker-files/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+            
+        networks:
+            - app-network
+        
+    # NGINX service
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        tty: true
+        
         ports:
-            - 8000:8000
-        depends_on:
-            - database
-
-    #Database server
-    database:
-        image: mysql:8.0
-        ports:
-            - 3306:3306
-        environment:
-            - MYSQL_DATABASE=${DB_DATABASE}
-            - MYSQL_ROOT_HOST=127.0.0.1
-            - MYSQL_USERNAME=${DB_USERNAME}
-            - MYSQL_PASSWORD=${DB_PASSWORD}
-            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+            - "8000:80"
+            - "8143:443"
+            
         volumes:
-            - db_data:/var/lib/mysql
+            - ./:/var/www
+            - ./docker-files/nginx/conf.d/:/etc/nginx/conf.d/
+            
+        networks:
+            - app-network
+        
+    # mysql - Service
+    mysql:
+        image: mysql:8.0
+        container_name: mysql
+        restart: unless-stopped
+        tty: true
+        
+        ports:
+            - "3306:3306"
+            
+        environment:
+            MYSQL_DATABASE: 'etcampuses'
+            MYSQL_USER: 'etcampuses2023'
+            MYSQL_ROOT_PASSWORD: 'etcampuses232023'
+            MYSQL_PASSWORD: '*etcampuses232023*'
+            
+        volumes:
+            - db-data:/var/lib/mysql
+            - ./docker-files/mysql/my.cnf:/etc/mysql/my.cnf
+            
+        networks:
+            - app-network
+            
+    # phpMyAdmin - Service
+    phpmyadmin:
+        container_name: phpmyadmin
+        depends_on: 
+            - mysql
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=mysql
+            - PMA_PORT=3306
+        networks:
+            - app-network
+        ports:
+            - 8001:80
 
+    # MailHog - Service
+    mailhog:
+        container_name: mailhog
+        image: 'mailhog/mailhog:latest'
+        ports:
+            - '${FORWARD_MAILHOG_PORT:-1025}:1025'
+            - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - app-network
+    
+# Volumes
 volumes:
-    db_data: ~
+  db-data:
+    driver: local
+    
+# Networks
+networks:
+  app-network:
+    driver: bridge
