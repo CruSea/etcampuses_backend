@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use App\Notifications\PasswordReset2;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordReset;
 
 class PasswordResetRequest
 {
@@ -34,7 +36,10 @@ class PasswordResetRequest
         //get model first
         $user = User::where('email', $request->input('email'))->first();
 
-        $user->notify(new PasswordReset2($user, $resetKey));
+        //old way
+        //$user->notify(new PasswordReset2($user, $resetKey));
+
+        Mail::to($user)->send(new PasswordReset($user, $resetKey));
 
         return response()->json([
             'status' => 200,
