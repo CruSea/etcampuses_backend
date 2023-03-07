@@ -13,6 +13,7 @@ use App\Http\Controllers\API\Version_1\Create_Campus\SignupController;
 use App\Http\Controllers\API\Version_1\Create_Campus\CreateNewCampusController;
 use App\Http\Controllers\API\Version_1\Update_Campus\UpdateCampusContentController;
 use App\Http\Controllers\API\Version_1\View_Campus\ViewCampusController;
+use App\Http\Controllers\API\Version_1\Admin_Management\AdminManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,17 +28,21 @@ use App\Http\Controllers\API\Version_1\View_Campus\ViewCampusController;
 
 //Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']); // implicit, temporary
 
-Route::post('/reset-password-request', [AuthController::Class, 'passwordResetRequest']); // to request password reset
-Route::post('/reset-password', [AuthController::Class, 'passwordReset']); // to reset password after link is clicked
-Route::post('/signup', [SignupController::Class, 'signup']);
+Route::get('/reset-password-request', [AuthController::Class, 'passwordResetRequest']); // to request password reset
+Route::get('/reset-password', [AuthController::Class, 'passwordReset']); // to reset password after link is clicked
+Route::get('/signup', [SignupController::Class, 'signup']);
 
 
 Route::group(['middleware' => ['web']], function () { // routes that require session must be placed here
+
+
     Route::get('/login', [AuthController::Class, 'login']);
     Route::get('/logout', [AuthController::Class, 'logout']);
     Route::post('/changepassword',[AuthController::Class, 'changePassword'])->middleware('user.auth');
 
     Route::post('/create-new-campus', [CreateNewCampusController::Class, 'create_New_Campus'])->middleware('user.auth');
+
+    Route::get('/get-admins', [AdminManagementController::Class, 'get_Admins'])->middleware('user.auth');
 
     Route::post('/upload-gallery-image', [GalleryController::Class, 'upload'])->middleware('user.auth');
     Route::delete('/delete-gallery-image', [GalleryController::Class, 'delete'])->middleware('user.auth');
