@@ -28,9 +28,9 @@ use App\Http\Controllers\API\Version_1\Admin_Management\AdminManagementControlle
 
 //Route::post('/add-campus-admin', [CampusAdminController::Class, 'store']); // implicit, temporary
 
-Route::get('/reset-password-request', [AuthController::Class, 'passwordResetRequest']); // to request password reset
-Route::get('/reset-password', [AuthController::Class, 'passwordReset']); // to reset password after link is clicked
-Route::get('/signup', [SignupController::Class, 'signup']);
+Route::post('/reset-password-request', [AuthController::Class, 'passwordResetRequest']); // to request password reset
+Route::post('/reset-password', [AuthController::Class, 'passwordReset']); // to reset password after link is clicked
+Route::post('/signup', [SignupController::Class, 'signup']);
 
 
 Route::group(['middleware' => ['web']], function () { // routes that require session must be placed here
