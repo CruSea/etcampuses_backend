@@ -35,8 +35,7 @@ Route::get('/signup', [SignupController::Class, 'signup']);
 
 Route::group(['middleware' => ['web']], function () { // routes that require session must be placed here
 
-
-    Route::get('/login', [AuthController::Class, 'login']);
+    Route::post('/login', [AuthController::Class, 'login']);
     Route::get('/logout', [AuthController::Class, 'logout']);
     Route::post('/changepassword',[AuthController::Class, 'changePassword'])->middleware('user.auth');
 
