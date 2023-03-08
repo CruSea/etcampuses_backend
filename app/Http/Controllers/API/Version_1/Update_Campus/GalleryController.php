@@ -14,6 +14,11 @@ class GalleryController extends Controller
         return $uploadGalleryImage->handle($request);
     }
 
+    public function upload_Multiple(Request $request, Upload_Gallery_Image $uploadGalleryImage)
+    {
+        return $uploadGalleryImage->handleMultiple($request);
+    }
+
     public function delete(Request $request, Delete_Gallery_Image $deleteGalleryImage)
     {
         return $deleteGalleryImage->handle($request);

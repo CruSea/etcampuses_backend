@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\API\Version_1\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +17,3 @@ use App\Http\Controllers\API\Version_1\Auth\AuthController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-Route::get('/reset-password-request', [AuthController::Class, 'passwordResetRequest']); // to request password reset

@@ -6,12 +6,12 @@ namespace App\Services\Version_1\Admin_Management;
 use App\Models\User;
 use App\Models\User_Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Get_Admins
 {
     public function handle(Request $request)
     {
-        echo "API Called!";
 
         //campus admin authorization
 
@@ -28,8 +28,12 @@ class Get_Admins
             ],);
         }
             
-        //get all admins for the campus
-        $admins = User::where('campusID', $request->campusID)->get();
+        //get all admins of the campus
+        $admins = DB::table('users')
+            ->join('user_roles', 'users.id', '=', 'user_roles.userID')
+            ->join('campuses', 'campuses.id', '=', 'user_roles.role')
+            ->select('users.*')->where('user_roles.role', $request->campusID)
+            ->get();
 
             
         return response()->json([

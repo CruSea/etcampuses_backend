@@ -47,4 +47,13 @@ class Create_Team
 
         
     }
+
+    public function handleMultiple(Request $request, Array $teams)
+    {
+        //inserts multiple teams
+
+        
+
+    }
+
 }
