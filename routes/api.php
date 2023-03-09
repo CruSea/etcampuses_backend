@@ -46,6 +46,7 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::post('/upload-gallery-image', [GalleryController::Class, 'upload'])->middleware('user.auth');
     Route::post('/upload-gallery-images', [GalleryController::Class, 'upload_Multiple'])->middleware('user.auth');
     Route::delete('/delete-gallery-image', [GalleryController::Class, 'delete'])->middleware('user.auth');
+    Route::delete('/delete-gallery-images', [GalleryController::Class, 'deleteMultiple'])->middleware('user.auth');
 
     Route::post('/update-welcome', [UpdateCampusContentController::Class, 'update_Welcome_Section'])->middleware('user.auth');
     Route::post('/update-intro', [UpdateCampusContentController::Class, 'update_Intro_Section'])->middleware('user.auth');

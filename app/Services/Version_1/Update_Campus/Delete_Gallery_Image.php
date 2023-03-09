@@ -46,4 +46,44 @@ class Delete_Gallery_Image
         ],);
 
     }
+
+
+    public function handleMultiple(Request $request)
+    {
+        
+
+        for($i = 0; $i < count($request->imageURL); $i++){ 
+
+            $gallery = Gallery::where('imageURL',$request->imageURL[$i])->first();
+            if($gallery == null){
+                return response()->json([
+                    'status' => 404,
+                    'message' => "Image $i not found!",
+                ],);
+            }
+
+            //make sure the image belongs to the campus admin
+
+            //retrieve user id from users table
+            $user = User::where('email', $request->session()->get('userEmail'))->first();
+
+            //make sure the user has access to the provided campus
+            $hasAcess = User_Role::where('userID', $user->id)->where('role', $gallery->campusID)->first();
+
+            if($hasAcess == null){
+                return response()->json([
+                    'status' => 403,
+                    'message' => "Unable to delete image $i. Unauthorized",
+                ],);
+            }
+
+            $gallery->delete();
+
+            echo "Image $i deleted successfully\n";
+
+            Storage::disk('public')->delete($request->imageURL[$i]);                 
+        }
+
+    }
+
 }

@@ -69,44 +69,27 @@ class Upload_Gallery_Image
             ],);
         }
 
+        //validation skipped - done on front end
 
-        try {
-            //check the validity of all images first
-            $validated = $request->validate([
-                'images' => 'required',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg'
-            ]);
+        for($i = 0; $i < count($request->images); $i++){ 
 
-            //iterate through the loop
-            for($i = 0; $i < count($request->images); $i++){
+            //count corresponds to the number of non-empty elements - not accurate
 
-                $gallery = new Gallery();
+            $gallery = new Gallery();
 
-                $gallery->campusID = $request->campusID;
-                        
-                $path = $request->images[$i]->storePublicly('gallery','public');
-                $gallery->imageURL = $path;
+            $gallery->campusID = $request->campusID;
+                    
+            $path = $request->images[$i]->storePublicly('gallery','public');
+            $gallery->imageURL = $path;
 
-                $gallery->save();
-
-            }
-
-            return response()->json([
-                'status' => 200,
-                'message' => 'Image(s) uploaded successfully',
-            ],);
-
-
-        } catch (\Throwable $th) {
-            //throw $th;
-            return response()->json([
-                'status' => 400,
-                'message' => 'One or more images are invalid or missing',
-            ],);
-
-
+            $gallery->save();                    
         }
 
-       
+        return response()->json([
+            'status' => 200,
+            'message' => 'Image(s) uploaded successfully',
+        ],);
+        
+
     }
 }

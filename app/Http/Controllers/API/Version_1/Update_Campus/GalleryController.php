@@ -23,4 +23,9 @@ class GalleryController extends Controller
     {
         return $deleteGalleryImage->handle($request);
     }
+
+    public function deleteMultiple(Request $request, Delete_Gallery_Image $deleteGalleryImage)
+    {
+        return $deleteGalleryImage->handleMultiple($request);
+    }
 }
