@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('auths', function (Blueprint $table) {
             $table->id();
-            $table->string('userEmail');
             $table->string('token');
+            $table->String('email')->unique()->collation('latin1_general_cs');
+            $table->foreign('email')->references('email')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

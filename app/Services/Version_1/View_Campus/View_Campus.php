@@ -19,6 +19,7 @@ use App\Models\Gallery;
 use App\Services\Version_1\Service_Management\Get_Services;
 use App\Services\Version_1\Team_Management\Get_Teams;
 use App\Services\Version_1\Leader_Management\Get_Leaders;
+use App\Services\Version_1\Utils\GetEmailFromToken;
 
 class View_Campus
 {
@@ -54,7 +55,7 @@ class View_Campus
                 //campus admin authorization
 
                 //retrieve user id from users table
-                $user = User::where('email', $request->session()->get('userEmail'))->first();
+                $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
                 //make sure the user has access to the provided campus
                 $hasAcess = User_Role::where('userID', $user->id)->where('role', $campus->id)->first();

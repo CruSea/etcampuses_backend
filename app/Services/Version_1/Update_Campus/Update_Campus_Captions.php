@@ -7,6 +7,7 @@ use App\Models\Campus;
 use App\Models\User;
 use App\Models\User_Role;
 use Illuminate\Http\Request;
+use App\Services\Version_1\Utils\GetEmailFromToken;
 
 class Update_Campus_Captions
 {
@@ -15,7 +16,7 @@ class Update_Campus_Captions
         //campus admin authorization
 
         // first, get the user
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
@@ -46,7 +47,7 @@ class Update_Campus_Captions
         //campus admin authorization
 
         // first, get the user
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
@@ -77,7 +78,7 @@ class Update_Campus_Captions
         //campus admin authorization
 
         // first, get the user
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
@@ -108,7 +109,7 @@ class Update_Campus_Captions
         //campus admin authorization
 
         // first, get the user
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
@@ -139,7 +140,7 @@ class Update_Campus_Captions
         //campus admin authorization
 
         // first, get the user
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
@@ -170,7 +171,7 @@ class Update_Campus_Captions
         //campus admin authorization
 
         // first, get the user
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();

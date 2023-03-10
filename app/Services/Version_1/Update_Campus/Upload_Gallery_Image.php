@@ -9,6 +9,7 @@ use App\Models\User_Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Services\Version_1\Utils\GetEmailFromToken;
 
 class Upload_Gallery_Image
 {
@@ -18,7 +19,7 @@ class Upload_Gallery_Image
         //campus admin authorization
 
         //retrieve user id from users table
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
@@ -57,7 +58,7 @@ class Upload_Gallery_Image
         //campus admin authorization
 
         //retrieve user id from users table
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
 
         //make sure the user has access to the provided campus
         $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();

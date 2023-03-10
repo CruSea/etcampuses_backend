@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\User_Role;
 use App\Services\Version_1\Admin_Management\Create_Admin;
 use Illuminate\Support\Str;
+use App\Services\Version_1\Utils\GetEmailFromToken;
 
 class Create_Campus
 {
@@ -16,7 +17,7 @@ class Create_Campus
     {
 
         //get user from session
-        $user = User::where('email', $request->session()->get('userEmail'))->first();
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
         //get the id of the user
         $adminID = $user->id;
 

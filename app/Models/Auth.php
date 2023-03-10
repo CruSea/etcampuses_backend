@@ -11,7 +11,7 @@ class Auth extends Model
 
     protected $table = 'auths';
     protected $fillable = [
-        'userEmail',
-        'token',            
+        'token',
+        'email'           
     ];
 }
