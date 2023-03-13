@@ -101,6 +101,10 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::delete('/delete-team', [TeamController::Class, 'delete_Team'])->middleware('user.auth.2');
     Route::delete('/delete-teams', [TeamController::Class, 'delete_Team_Multiple'])->middleware('user.auth.2');
     
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Route::post('/create-student', [StudentController::Class, 'create_Student']); //Creating students shouldn't be authenticated
     Route::get('/{campusURL}/create-student', function (StudentController $studentController, String $campusURL, Request $request, Create_Student $createStudent) {
         return $studentController->create_Student($request, $createStudent, $campusURL);
@@ -109,5 +113,10 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::get('/get-students', [StudentController::Class, 'get_Students'])->middleware('user.auth.2');
     Route::post('/update-student', [StudentController::Class, 'update_Student'])->middleware('user.auth.2');
     Route::delete('/delete-student', [StudentController::Class, 'delete_Student'])->middleware('user.auth.2');
+
+    // visible only to the campus admin
+    Route::get('/{campusURL}/view', function (ViewCampusController $viewCampusController, String $campusURL, Request $request) {
+        return $viewCampusController->view_Campus($request, $campusURL);
+    })->middleware('user.auth.2');
 
 });

@@ -72,10 +72,10 @@ class Create_Service
             $service = new Service();
             $service->campusID = $request->campusID;
 
-            $service->name = $request->services[$i]['name'];
-            $service->day = $request->services[$i]['day'];
-            $service->time = $request->services[$i]['time'];
-            $service->address = $request->services[$i]['address'];
+            $service->name = $request->services[$i][0];
+            $service->day = $request->services[$i][1];
+            $service->time = $request->services[$i][2];
+            $service->address = $request->services[$i][3];
                                 
             $service->save();                 
 
