@@ -80,10 +80,13 @@ class Delete_Gallery_Image
 
             $gallery->delete();
 
-            echo "Image $i deleted successfully\n";
-
             Storage::disk('public')->delete($request->imageURL[$i]);                 
         }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Image(s) deleted successfully',
+        ],);
 
     }
 

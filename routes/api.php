@@ -42,7 +42,7 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
 
     //new login and logout apis are created
     Route::post('/login', [AuthController2::Class, 'login']);
-    Route::get('/logout', [AuthController2::Class, 'logout']);
+    Route::post('/logout', [AuthController2::Class, 'logout']);
     
     Route::post('/changepassword',[AuthController::Class, 'changePassword'])->middleware('user.auth.2');
 
@@ -80,9 +80,11 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     */
 
     Route::post('/create-service', [ServiceController::Class, 'create_Service'])->middleware('user.auth.2');
+    Route::post('/create-services', [ServiceController::Class, 'create_Service_Multiple'])->middleware('user.auth.2');
     Route::get('/get-services', [ServiceController::Class, 'get_Services'])->middleware('user.auth.2');
     Route::post('/update-service', [ServiceController::Class, 'update_Service'])->middleware('user.auth.2');
     Route::delete('/delete-service', [ServiceController::Class, 'delete_Service'])->middleware('user.auth.2');
+    Route::delete('/delete-services', [ServiceController::Class, 'delete_Service_Multiple'])->middleware('user.auth.2');
 
     Route::post('/create-leader', [LeaderController::Class, 'create_Leader'])->middleware('user.auth.2');
     Route::get('/get-leaders', [LeaderController::Class, 'get_Leaders'])->middleware('user.auth.2');

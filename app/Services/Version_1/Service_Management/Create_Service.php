@@ -46,4 +46,49 @@ class Create_Service
 
         
     }
+
+
+    public function handleMultiple(Request $request)
+    {
+        //campus admin authorization
+
+        // first, get the user
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
+
+        //make sure the user has access to the provided campus
+        $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
+
+        if($hasAcess == null){
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthorized',
+            ],);
+        }
+
+        for($i = 0; $i < count($request->services); $i++){
+
+            //count corresponds to the number of non-empty elements - not accurate
+
+            $service = new Service();
+            $service->campusID = $request->campusID;
+
+            $service->name = $request->name[$i];
+            $service->day = $request->day[$i];
+            $service->time = $request->time[$i];
+            $service->address = $request->address[$i];
+                                
+            $service->save();                 
+
+        }
+            
+        
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Service(s) created successfully',
+        ],);
+
+        
+    }
+
 }

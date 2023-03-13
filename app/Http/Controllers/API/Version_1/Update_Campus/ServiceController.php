@@ -17,6 +17,11 @@ class ServiceController extends Controller
         return $createService->handle($request);
     }
 
+    public function create_Service_Multiple(Request $request, Create_Service $createService)
+    {
+        return $createService->handleMultiple($request);
+    }
+
     public function get_Services(Request $request, Get_Services $getServices)
     {
         return $getServices->handle($request);
@@ -30,5 +35,10 @@ class ServiceController extends Controller
     public function delete_Service(Request $request, Delete_Service $deleteService)
     {
         return $deleteService->handle($request);
+    }
+
+    public function delete_Service_Multiple(Request $request, Delete_Service $deleteService)
+    {
+        return $deleteService->handleMultiple($request);
     }
 }

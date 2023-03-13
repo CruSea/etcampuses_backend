@@ -50,4 +50,49 @@ class Delete_Service
 
         
     }
+
+    public function handleMultiple(Request $request)
+    {
+        //campus admin authorization
+
+        // first, get the user
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
+
+        //make sure the user has access to the provided campus
+        $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
+
+        if($hasAcess == null){
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthorized',
+            ],);
+        }
+
+        for($i = 0; $i < count($request->services); $i++){
+
+            //count corresponds to the number of non-empty elements - not accurate
+
+            //get the service that needs to be deleted
+            $service = Service::where('id', $request->serviceID[$i])->first();
+
+            //check if the result is empty
+            if($service == null){
+                return response()->json([
+                    'status' => 404,
+                    'message' => "Service $i not found",
+                ]);
+            }
+
+            //delete the service
+            $service->delete();
+
+        }
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'Service(s) deleted successfully',
+        ],);
+
+        
+    }
 }
