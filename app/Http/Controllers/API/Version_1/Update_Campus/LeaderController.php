@@ -17,6 +17,11 @@ class LeaderController extends Controller
         return $createLeader->handle($request);
     }
 
+    public function create_Leader_Multiple(Request $request, Create_Leader $createLeader)
+    {
+        return $createLeader->handleMultiple($request);
+    }
+
     public function get_Leaders(Request $request, Get_Leaders $getLeaders)
     {
         return $getLeaders->handle($request);
@@ -30,5 +35,10 @@ class LeaderController extends Controller
     public function delete_Leader(Request $request, Delete_Leader $deleteLeader)
     {
         return $deleteLeader->handle($request);
+    }
+
+    public function delete_Leader_Multiple(Request $request, Delete_Leader $deleteLeader)
+    {
+        return $deleteLeader->handleMultiple($request);
     }
 }

@@ -87,6 +87,7 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::delete('/delete-services', [ServiceController::Class, 'delete_Service_Multiple'])->middleware('user.auth.2');
 
     Route::post('/create-leader', [LeaderController::Class, 'create_Leader'])->middleware('user.auth.2');
+    Route::post('/create-leaders', [LeaderController::Class, 'create_Leader_Multiple'])->middleware('user.auth.2');
     Route::get('/get-leaders', [LeaderController::Class, 'get_Leaders'])->middleware('user.auth.2');
     Route::post('/update-leader', [LeaderController::Class, 'update_Leader'])->middleware('user.auth.2');
     Route::delete('/delete-leader', [LeaderController::Class, 'delete_Leader'])->middleware('user.auth.2');

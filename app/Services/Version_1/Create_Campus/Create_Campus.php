@@ -81,8 +81,8 @@ class Create_Campus
         return response()->json([
             'status' => 200,
             'message' => 'Campus created successfully!',
-            'Newly created campus ID' => $campus->id,
-            'Campus URL' => $campus->url,
+            'campusID' => $campus->id,
+            'CampusURL' => $campus->url,
         ]);
     }
 }

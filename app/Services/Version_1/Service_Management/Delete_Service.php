@@ -68,7 +68,7 @@ class Delete_Service
             ],);
         }
 
-        for($i = 0; $i < count($request->services); $i++){
+        for($i = 0; $i < count($request->serviceID); $i++){
 
             //count corresponds to the number of non-empty elements - not accurate
 
