@@ -14,24 +14,30 @@ class Create_Student
 {
     public function handle(Request $request)
     {
-        //campus admin authorization
+        //check if a campus with the given url exists
+        $campus = Campus::where('url', $campusURL)->first();
 
-        // first, get the user
-        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
-
-        //make sure the user has access to the provided campus
-        $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
-
-        if($hasAcess == null){
+        if($campus == null){
             return response()->json([
-                'status' => 401,
-                'message' => 'Unauthorized',
-            ],);
+                'status' => '404',
+                'message' => 'Not Found'
+            ]);
+        }
+
+        //security measure
+        
+        if($campus->isPublished == false){
+
+            return response()->json([
+                'status' => '401',
+                'message' => 'Access Denied!'
+            ]);
+
         }
 
         $student = new Student();
             
-        $student->campusID = $request->campusID;
+        $student->campusID = $campus->campusID;
 
         $student->firstName = $request->firstName;
         $student->lastName = $request->lastName;
@@ -46,7 +52,7 @@ class Create_Student
 
         return response()->json([
             'status' => 200,
-            'message' => 'Student created successfully',
+            'message' => 'Registration successful!',
         ],);
 
         

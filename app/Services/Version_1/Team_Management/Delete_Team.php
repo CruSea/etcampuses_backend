@@ -55,4 +55,51 @@ class Delete_Team
 
         
     }
+
+    public function handleMultiple(Request $request)
+    {
+        //campus admin authorization
+
+        // first, get the user
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
+
+        //make sure the user has access to the provided campus
+        $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
+
+        if($hasAcess == null){
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthorized',
+            ],);
+        }
+
+        for($i = 0; $i < count($request->teamID); $i++){
+            //get the team that needs to be deleted
+            $team = Team::where('id', $request->teamID[$i])->first();
+
+            //check if the result is empty
+            if($team == null){
+                return response()->json([
+                    'status' => 404,
+                    'message' => "Team $i not found",
+                ]);
+            }
+
+            //delete the image if it exists
+            if($team->image != ''){
+                Storage::delete($team->image);
+            }
+
+            //delete the Team
+            $team->delete();
+        }
+            
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'Team(s) deleted successfully',
+        ],);
+
+        
+    }
 }

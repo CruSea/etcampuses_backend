@@ -54,4 +54,51 @@ class Delete_Leader
         ],);
         
     }
+
+    public function handleMultiple(Request $request)
+    {
+        //campus admin authorization
+
+        // first, get the user
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
+
+        //make sure the user has access to the provided campus
+        $hasAcess = User_Role::where('userID', $user->id)->where('role', $request->campusID)->first();
+
+        if($hasAcess == null){
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthorized',
+            ],);
+        }
+
+        for($i = 0; $i < count($request->leaderID); $i++){
+            //get the leader that needs to be deleted
+            $leader = Leader::where('id', $request->leaderID[$i])->first();
+
+            //check if the result is empty
+            if($leader == null){
+                return response()->json([
+                    'status' => 404,
+                    'message' => "Leader $i not found",
+                ]);
+            }
+
+            //delete the old image if it exists
+            if($leader->photo != ''){
+                Storage::delete($leader->photo);
+            }
+
+            //delete the service
+            $leader->delete();
+        }
+            
+        
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'Leader(s) deleted successfully',
+        ],);
+        
+    }
 }

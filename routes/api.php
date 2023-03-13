@@ -15,6 +15,7 @@ use App\Http\Controllers\API\Version_1\Create_Campus\CreateNewCampusController;
 use App\Http\Controllers\API\Version_1\Update_Campus\UpdateCampusContentController;
 use App\Http\Controllers\API\Version_1\View_Campus\ViewCampusController;
 use App\Http\Controllers\API\Version_1\Admin_Management\AdminManagementController;
+use App\Services\Version_1\Student_Management\Create_Student;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,19 +92,22 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::get('/get-leaders', [LeaderController::Class, 'get_Leaders'])->middleware('user.auth.2');
     Route::post('/update-leader', [LeaderController::Class, 'update_Leader'])->middleware('user.auth.2');
     Route::delete('/delete-leader', [LeaderController::Class, 'delete_Leader'])->middleware('user.auth.2');
+    Route::delete('/delete-leaders', [LeaderController::Class, 'delete_Leader_Multiple'])->middleware('user.auth.2');
 
     Route::post('/create-team', [TeamController::Class, 'create_Team'])->middleware('user.auth.2');
+    Route::post('/create-teams', [TeamController::Class, 'create_Team_Multiple'])->middleware('user.auth.2');
     Route::get('/get-teams', [TeamController::Class, 'get_Teams'])->middleware('user.auth.2');
     Route::post('/update-team', [TeamController::Class, 'update_Team'])->middleware('user.auth.2');
     Route::delete('/delete-team', [TeamController::Class, 'delete_Team'])->middleware('user.auth.2');
+    Route::delete('/delete-teams', [TeamController::Class, 'delete_Team_Multiple'])->middleware('user.auth.2');
     
     Route::post('/create-student', [StudentController::Class, 'create_Student']); //Creating students shouldn't be authenticated
+    Route::get('/{campusURL}/create-student', function (StudentController $studentController, String $campusURL, Request $request, Create_Student $createStudent) {
+        return $studentController->create_Student($request, $createStudent, $campusURL);
+    });
+
     Route::get('/get-students', [StudentController::Class, 'get_Students'])->middleware('user.auth.2');
     Route::post('/update-student', [StudentController::Class, 'update_Student'])->middleware('user.auth.2');
     Route::delete('/delete-student', [StudentController::Class, 'delete_Student'])->middleware('user.auth.2');
-
-    Route::get('/{campusURL}', function (ViewCampusController $viewCampusController, String $campusURL, Request $request) {
-        return $viewCampusController->view_Campus($request, $campusURL);
-    });
 
 });

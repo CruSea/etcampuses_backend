@@ -17,6 +17,11 @@ class TeamController extends Controller
         return $createTeam->handle($request);
     }
 
+    public function create_Team_Multiple(Request $request, Create_Team $createTeam)
+    {
+        return $createTeam->handleMultiple($request);
+    }
+
     public function get_Teams(Request $request, Get_Teams $getTeams)
     {
         return $getTeams->handle($request);
@@ -30,5 +35,10 @@ class TeamController extends Controller
     public function delete_Team(Request $request, Delete_Team $deleteTeam)
     {
         return $deleteTeam->handle($request);
+    }
+
+    public function delete_Team_Multiple(Request $request, Delete_Team $deleteTeam)
+    {
+        return $deleteTeam->handleMultiple($request);
     }
 }

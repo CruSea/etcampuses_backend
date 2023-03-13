@@ -110,32 +110,9 @@ class Create_Leader
         }
 
 
-        // $leader = new Leader();
-
-        // $leader->campusID = $request->campusID;
-
-        // $path = $request->photo->storePublicly('leaders','public');
-        // $leader->photo = $path;
-
-        // $leader->name = $request->name;
-        // $leader->role = $request->role;            
-        // $leader->phone = $request->phone;
-        
-        // if($request->telegramLink != null)
-        //     $leader->telegramLink = $request->telegramLink;
-        // else
-        //     $leader->telegramLink = '';
-
-        // if($request->facebookLink != null)
-        //     $leader->facebookLink = $request->facebookLink;
-        // else
-        //     $leader->facebookLink = '';
-                            
-        // $leader->save();
-
         return response()->json([
             'status' => 200,
-            'message' => 'Leader created successfully',
+            'message' => 'Leader(s) created successfully',
         ],);
 
         

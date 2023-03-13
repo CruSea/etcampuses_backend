@@ -12,9 +12,9 @@ use App\Services\Version_1\Student_Management\Delete_Student;
 
 class StudentController extends Controller
 {
-    public function create_Student(Request $request, Create_Student $createStudent)
+    public function create_Student(Request $request, Create_Student $createStudent, string $campusURL)
     {
-        return $createStudent->handle($request);
+        return $createStudent->handle($request, $campusURL);
     }
 
     public function get_Students(Request $request, Get_Students $getStudents)
@@ -30,5 +30,10 @@ class StudentController extends Controller
     public function delete_Student(Request $request, Delete_Student $deleteStudent)
     {
         return $deleteStudent->handle($request);
+    }
+
+    public function delete_Student_Multiple(Request $request, Delete_Student $deleteStudent)
+    {
+        return $deleteStudent->handleMultiple($request);
     }
 }

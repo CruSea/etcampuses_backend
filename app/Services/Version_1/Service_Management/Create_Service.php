@@ -80,8 +80,6 @@ class Create_Service
             $service->save();                 
 
         }
-            
-        
 
         return response()->json([
             'status' => 200,
