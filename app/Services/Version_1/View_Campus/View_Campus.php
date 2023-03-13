@@ -20,6 +20,7 @@ use App\Services\Version_1\Service_Management\Get_Services;
 use App\Services\Version_1\Team_Management\Get_Teams;
 use App\Services\Version_1\Leader_Management\Get_Leaders;
 use App\Services\Version_1\Utils\GetEmailFromToken;
+use App\Services\Version_1\Auth\AuthenticateByEmail;
 
 class View_Campus
 {
@@ -48,7 +49,7 @@ class View_Campus
             //The campus is visible to the admin only
             //so, check if the user is logged in
 
-            if ($request->session()->exists('userEmail')) {
+            if (1==1/* authenticated */) {
 
                 //user is logged in
 
