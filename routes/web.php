@@ -23,7 +23,7 @@ use App\Http\Controllers\API\Version_1\View_Campus\ViewCampusController;
 // });
 
 Route::get('/{campusURL}', function (ViewCampusController $viewCampusController, String $campusURL, Request $request) {
-    return $viewCampusController->view_Campus($request, $campusURL);
+    return $viewCampusController->view_Campus_Public($request, $campusURL);
 });
 
 Route::get('/{campusURL}/register', function (StudentController $studentController, String $campusURL, Request $request, Create_Student $createStudent) {

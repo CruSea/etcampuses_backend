@@ -5,6 +5,7 @@ namespace App\Services\Version_1\Student_Management;
 
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Campus;
 use App\Models\User_Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,8 +13,10 @@ use App\Services\Version_1\Utils\GetEmailFromToken;
 
 class Create_Student
 {
-    public function handle(Request $request)
+    public function handle(Request $request, String $campusURL)
     {
+        //Register student
+
         //check if a campus with the given url exists
         $campus = Campus::where('url', $campusURL)->first();
 
@@ -37,7 +40,7 @@ class Create_Student
 
         $student = new Student();
             
-        $student->campusID = $campus->campusID;
+        $student->campusID = $campus->id;
 
         $student->firstName = $request->firstName;
         $student->lastName = $request->lastName;

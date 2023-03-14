@@ -15,13 +15,16 @@ use App\Models\Fellowship;
 use App\Models\Registration;
 use App\Models\Footer;
 use App\Models\Social;
+use App\Models\Service;
+use App\Models\Team;
+use App\Models\Leader;
 use App\Models\Gallery;
 use App\Services\Version_1\Service_Management\Get_Services;
 use App\Services\Version_1\Team_Management\Get_Teams;
 use App\Services\Version_1\Leader_Management\Get_Leaders;
 use App\Services\Version_1\Utils\GetEmailFromToken;
 
-class View_Campus
+class View_Campus_Public
 {
     public function handle(Request $request, String $campusURL)
     {
@@ -36,22 +39,21 @@ class View_Campus
             ]);
         }
 
-        //campus admin authorization
+        //check if the campus is published
+        if($campus->isPublished == true){
 
-        //retrieve user id from users table
-        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
+            //display campus page here
+            return $this->getCampusDetails($campus->id, $request);
 
-        //make sure the user has access to the provided campus
-        $hasAcess = User_Role::where('userID', $user->id)->where('role', $campus->id)->first();
-
-        if($hasAcess == null){
-            return response()->json([
-                'status' => 403,
-                'message' => 'Seems like you are not authorized to view this page.',
-            ],);
         }
+        else{
 
-        return $this->getCampusDetails($campus->id, $request);
+            return response()->json([
+                'status' => '403',
+                'message' => 'Seems like you are not authorized to view this page.'
+            ]);
+
+        }
 
         
     }
@@ -74,16 +76,19 @@ class View_Campus
         $fellowship = Fellowship::where('campusID', $campusID)->first();
 
         //fetch the services that correspond to the campusID
-        $get_Services = new Get_Services();
-        $services = $get_Services->handle($request, $campusID);
+        //$get_Services = new Get_Services();
+        //$services = $get_Services->handle($request, $campusID);
+        $services = Service::where('campusID', $campusID)->get();
 
         //fetch the teams that correspond to the campusID
-        $get_Teams = new Get_Teams();
-        $teams = $get_Teams->handle($request, $campusID);
+        //$get_Teams = new Get_Teams();
+        //$teams = $get_Teams->handle($request, $campusID);
+        $teams = Team::where('campusID', $campusID)->get();
 
         //fetch the leaders that correspond to the campusID
-        $get_Leaders = new Get_Leaders();
-        $leaders = $get_Leaders->handle($request, $campusID);
+        //$get_Leaders = new Get_Leaders();
+        //$leaders = $get_Leaders->handle($request, $campusID);
+        $leaders = Leader::where('campusID', $campusID)->get();
 
         //Visibility of form
         $registration = Registration::where('campusID', $campusID)->first();
