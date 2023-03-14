@@ -110,8 +110,8 @@ Route::group(['middleware' => ['web']], function () { // routes that require ses
     Route::delete('/delete-student', [StudentController::Class, 'delete_Student'])->middleware('user.auth.2');
 
     // visible only to the campus admin
-    Route::get('/{campusURL}/view', function (ViewCampusController $viewCampusController, String $campusURL, Request $request) {
-        return $viewCampusController->view_Campus($request, $campusURL);
+    Route::get('/view-campuses', function (ViewCampusController $viewCampusController, Request $request) {
+        return $viewCampusController->view_Campus($request);
     })->middleware('user.auth.2');
 
 });

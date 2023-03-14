@@ -23,36 +23,34 @@ use App\Services\Version_1\Utils\GetEmailFromToken;
 
 class View_Campus
 {
-    public function handle(Request $request, String $campusURL)
+    public function handle(Request $request)
     {
 
-        //check if a campus with the given url exists
-        $campus = Campus::where('url', $campusURL)->first();
+        //view all campuses created by the admin
 
-        if($campus == null){
+        //get the user first
+        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
+
+        //get the campuses created by the admin
+        $roles = User_Role::where('userID', $user->id)->get();
+
+        if($roles == '[]'){
             return response()->json([
-                'status' => '404',
-                'message' => 'Not Found'
+                'message' => 'You haven\'t created any campuses yet',      
             ]);
         }
 
-        //campus admin authorization
+        $responses = '';
 
-        //retrieve user id from users table
-        $user = User::where('email', GetEmailFromToken::getEmailFromToken($request->token))->first();
+        foreach ($roles as $role) {
+            $campus = Campus::where('id', [$role->role])->first();
+            echo response()->json([
+                    'campusID' => $role->role,
+                    'content' => $this->getCampusDetails($campus->id, $request),
+                ]);
 
-        //make sure the user has access to the provided campus
-        $hasAcess = User_Role::where('userID', $user->id)->where('role', $campus->id)->first();
-
-        if($hasAcess == null){
-            return response()->json([
-                'status' => 403,
-                'message' => 'Seems like you are not authorized to view this page.',
-            ],);
+            $this->getCampusDetails($campus->id, $request);
         }
-
-        return $this->getCampusDetails($campus->id, $request);
-
         
     }
 
