@@ -13,16 +13,6 @@ class Signup
     {
         //Used for campus admin signups!
 
-        echo "Datas you sent to the server";
-
-        return response()->json([
-            'first name' => $request->firstName,
-            'last name' => $request->lastName,
-            'email' => $request->email,
-            'password' => $request->password,
-            'confirm password' => $request->confirmPassword,
-        ]);
-
         //check if passwords match
         if($request->password != $request->confirmPassword){
             return response()->json([
