@@ -65,17 +65,17 @@ class Create_Service
             ],);
         }
 
-        for($i = 0; $i < count($request->services); $i++){
+        for($i = 0; $i < count($request->input('services')); $i++){
 
             //count corresponds to the number of non-empty elements - not accurate
 
             $service = new Service();
             $service->campusID = $request->campusID;
 
-            $service->name = $request->services[$i][0];
-            $service->day = $request->services[$i][1];
-            $service->time = $request->services[$i][2];
-            $service->address = $request->services[$i][3];
+            $service->name = $request->input('services')[$i][0];
+            $service->day = $request->input('services')[$i][1];
+            $service->time = $request->input('services')[$i][2];
+            $service->address = $request->input('services')[$i][3];
                                 
             $service->save();                 
 
