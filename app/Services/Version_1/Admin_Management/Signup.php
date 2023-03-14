@@ -5,6 +5,7 @@ namespace App\Services\Version_1\Admin_Management;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+header('Access-Control-Allow-Origin: *');
 
 class Signup
 {
